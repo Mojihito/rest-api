@@ -1,0 +1,45 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /doc
+        permanent: true
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /
+    defaults:  { _format: json }
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+    defaults:  { _format: json }
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+    defaults:  { _format: json }
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc
+    defaults:  { _format: json }
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+    defaults:  { _format: json }
+    methods:  [GET, POST, OPTIONS]
+
+#For Implicit Grant or to get Authorization Code no need in our case (password flow)
+#fos_oauth_server_authorize:
+#    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+#    defaults:  { _format: json }
+
+vardius_crud:
+    resource: "@VardiusCrudBundle/Resources/config/routing.yml"
+    prefix:   /
+    defaults:  { _format: json }

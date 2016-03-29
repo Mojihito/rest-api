@@ -1,0 +1,25 @@
+#FILTERS
+services:
+  form.type.users_filter:
+      class: AppBundle\Form\Type\Filter\UserFilterType
+      tags:
+          - { name: form.type, alias: user_filter }
+  provider.users_filter:
+      class: AppBundle\Filter\UserFilterProvider
+      parent: vardius_list.filter.provider
+
+  form.type.files_filter:
+      class: AppBundle\Form\Type\Filter\FileFilterType
+      tags:
+          - { name: form.type, alias: file_filter }
+  provider.files_filter:
+      class: AppBundle\Filter\FileFilterProvider
+      parent: vardius_list.filter.provider
+
+  form.type.tags_filter:
+      class: AppBundle\Form\Type\Filter\TagFilterType
+      tags:
+          - { name: form.type, alias: tag_filter }
+  provider.tags_filter:
+      class: AppBundle\Filter\TagFilterProvider
+      parent: vardius_list.filter.provider
