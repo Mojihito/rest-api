@@ -15,11 +15,3 @@ services:
   provider.files_filter:
       class: AppBundle\Filter\FileFilterProvider
       parent: vardius_list.filter.provider
-
-  form.type.tags_filter:
-      class: AppBundle\Form\Type\Filter\TagFilterType
-      tags:
-          - { name: form.type, alias: tag_filter }
-  provider.tags_filter:
-      class: AppBundle\Filter\TagFilterProvider
-      parent: vardius_list.filter.provider

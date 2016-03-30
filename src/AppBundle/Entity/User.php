@@ -10,10 +10,9 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -24,8 +23,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Entity
  * @ORM\Table(name="users")
- *
- * @Serializer\ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -33,20 +30,13 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Expose()
      */
     protected $id;
-
-    /**
-     * @Serializer\Expose()
-     */
-    protected $roles;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(groups={"Profile"})
-     * @Serializer\Expose()
      */
     protected $name;
 
@@ -54,7 +44,6 @@ class User extends BaseUser
      * @var string
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(groups={"Profile"})
-     * @Serializer\Expose()
      */
     protected $surname;
 
@@ -64,7 +53,6 @@ class User extends BaseUser
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
      * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Serializer\Expose()
      */
     protected $birth;
 
@@ -73,7 +61,6 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(groups={"Profile"})
      * @Assert\Url()
-     * @Serializer\Expose()
      */
     protected $avatar;
 
@@ -82,7 +69,6 @@ class User extends BaseUser
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Serializer\Expose()
      */
     protected $created;
 
@@ -91,7 +77,6 @@ class User extends BaseUser
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
-     * @Serializer\Expose()
      */
     protected $updated;
 

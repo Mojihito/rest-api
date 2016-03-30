@@ -29,7 +29,6 @@ class AppKernel extends Kernel
             new Vardius\Bundle\SecurityBundle\VardiusSecurityBundle(),
             //Vardius Dependencies
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
 
             //Application Bundles
             new AppBundle\AppBundle(),

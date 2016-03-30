@@ -9,9 +9,3 @@ services:
       class: AppBundle\Form\Type\FileType
       tags:
           - { name: form.type, alias: file }
-
-  form.type.tags:
-      class: AppBundle\Form\Type\TagType
-      tags:
-          - { name: form.type, alias: tag }
-
