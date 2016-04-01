@@ -10,8 +10,17 @@
 
 namespace CrudBundle\Actions\Action;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vardius\Bundle\CrudBundle\Actions\Action;
+use Vardius\Bundle\CrudBundle\Event\ActionEvent;
+use Vardius\Bundle\CrudBundle\Event\CrudEvent;
+use Vardius\Bundle\CrudBundle\Event\CrudEvents;
+use Vardius\Bundle\CrudBundle\Event\ResponseEvent;
+use Vardius\Bundle\ListBundle\Column\ColumnInterface;
+use Vardius\Bundle\ListBundle\Event\ListDataEvent;
+use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProviderInterface;
 
 /**
  * ListAction
@@ -21,11 +30,79 @@ use Vardius\Bundle\CrudBundle\Actions\Action;
 class ListAction extends Action\ListAction
 {
     /**
+     * {@inheritdoc}
+     */
+    public function call(ActionEvent $event, $format)
+    {
+        $controller = $event->getController();
+
+        $this->checkRole($controller);
+
+        $request = $event->getRequest();
+        $repository = $event->getDataProvider()->getSource();
+        $listDataEvent = new ListDataEvent($repository, $request);
+
+        /** @var ListViewProviderInterface $listViewProvider */
+        $listViewProvider = $controller->get(trim($controller->getRoutePrefix(), '/') . '.list_view');
+        $listView = $listViewProvider->buildListView();
+
+        if ($format === 'html') {
+            $params = [
+                'list' => $listView->render($listDataEvent),
+                'title' => $listView->getTitle(),
+            ];
+        } else {
+            $columns = $listView->getColumns();
+            $results = $listView->getData($listDataEvent, true);
+            $results = $this->parseResults($results->toArray(), $columns, $format);
+
+            $params = [
+                'data' => $results,
+            ];
+        }
+
+        $routeName = $request->get('_route');
+        if (strpos($routeName, 'export') !== false) {
+            $params['ui'] = false;
+        }
+
+        $paramsEvent = new ResponseEvent($params);
+        $crudEvent = new CrudEvent($repository, $controller, $paramsEvent);
+
+        $dispatcher = $controller->get('event_dispatcher');
+        $dispatcher->dispatch(CrudEvents::CRUD_LIST, $crudEvent);
+
+        $responseHandler = $controller->get('vardius_crud.response.handler');
+
+        return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['list']);
+    }
+
+    /**
      * @inheritDoc
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
+
+        $resolver->setDefault('defaults', [
+            'page' => 1,
+            'limit' => null,
+            'column' => null,
+            'sort' => null,
+        ]);
+
+        $resolver->setDefault('requirements', [
+            'page' => '\d+',
+            'limit' => '\d+',
+        ]);
+
+        $resolver->setDefault('pattern', function (Options $options) {
+            if ($options['rest_route']) {
+                return '.{_format}';
+            }
+
+            return '/list/{page}/{limit}/{column}/{sort}.{_format}';
+        });
 
         $resolver->setDefault('parameters', [
             ['name' => 'page', 'dataType' => 'integer', "required" => false, 'description' => 'page value'],
@@ -33,6 +110,35 @@ class ListAction extends Action\ListAction
             ['name' => 'column', 'dataType' => 'string', "required" => false, 'description' => 'sorts data by column name'],
             ['name' => 'sort', 'dataType' => 'string', "required" => false, 'description' => 'sort method (ASC|DESC)'],
         ]);
+    }
+
+    /**
+     * @param array $results
+     * @param ArrayCollection|ColumnInterface[] $columns
+     * @param string $format
+     * @return array
+     */
+    protected function parseResults(array $results, $columns, $format)
+    {
+        foreach ($results as $key => $result) {
+            if (is_array($result)) {
+
+                $results[$key] = $this->parseResults($result, $columns, $format);
+            } elseif (method_exists($result, 'getId')) {
+                $rowData = [];
+
+                /** @var ColumnInterface $column */
+                foreach ($columns as $column) {
+                    $columnData = $column->getData($result, $format);
+                    if ($columnData) {
+                        $rowData[$column->getLabel()] = $columnData;
+                    }
+                }
+                $results[$key] = $rowData;
+            }
+        }
+
+        return $results;
     }
 
 }

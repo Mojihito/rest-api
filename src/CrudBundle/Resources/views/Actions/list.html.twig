@@ -1,0 +1,11 @@
+{% extends 'VardiusCrudBundle::layout.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    {{ list|raw }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
