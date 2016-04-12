@@ -44,7 +44,7 @@ Register services:
 ```
 php app/console propel:crud:register @AppBundle Book Author
 ```
-## Migrations
+### Migrations
 [Migration Workflow](http://propelorm.org/Propel/documentation/10-migrations.html)
 ```
 php app/console propel:migration:generate-diff
