@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 /**
  * Class UserType
  * @package AppBundle\Form\Type
@@ -40,8 +39,7 @@ class UserType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'required' => false,
             ])
-            ->add('enabled', 'checkbox', ['required' => false])
-        ;
+            ->add('enabled', 'checkbox', ['required' => false]);
     }
 
     /**
@@ -62,5 +60,4 @@ class UserType extends AbstractType
     {
         return 'user';
     }
-
 }

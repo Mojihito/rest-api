@@ -28,5 +28,4 @@ class FileFilterProvider extends FilterProvider
             ->addFilter('name', 'text')
             ->addFilter('path', 'text');
     }
-
 }

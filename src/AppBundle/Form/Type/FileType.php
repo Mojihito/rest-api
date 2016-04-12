@@ -27,9 +27,8 @@ class FileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name','text', ['required'=> false])
-            ->add('file','file')
-        ;
+            ->add('name', 'text', ['required' => false])
+            ->add('file', 'file');
     }
 
     /**
@@ -50,5 +49,4 @@ class FileType extends AbstractType
     {
         return 'file';
     }
-
 }

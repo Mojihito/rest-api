@@ -24,9 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClientCommand extends ContainerAwareCommand
 {
-    /**
-     *
-     */
+    
     protected function configure()
     {
         $this

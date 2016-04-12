@@ -48,5 +48,4 @@ class FosUserListener implements EventSubscriberInterface
             'message' => 'Reset Success',
         ]));
     }
-
 }

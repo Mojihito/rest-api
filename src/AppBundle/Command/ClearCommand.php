@@ -25,9 +25,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearCommand extends ContainerAwareCommand
 {
-    /**
-     *
-     */
     protected function configure()
     {
         $this

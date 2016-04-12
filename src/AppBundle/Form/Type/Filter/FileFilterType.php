@@ -54,5 +54,4 @@ class FileFilterType extends AbstractType
     {
         return 'file_filter';
     }
-
 }

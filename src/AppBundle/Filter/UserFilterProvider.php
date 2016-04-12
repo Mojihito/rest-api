@@ -30,8 +30,6 @@ class UserFilterProvider extends FilterProvider
             ->addFilter('name', 'text')
             ->addFilter('surname', 'text')
             ->addFilter('roles', 'text')
-            ->addFilter('enabled', 'text')
-        ;
+            ->addFilter('enabled', 'text');
     }
-
 }

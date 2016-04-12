@@ -73,5 +73,4 @@ class BaseActionProvider extends BaseProvider
 
         return $this->actions;
     }
-
 }

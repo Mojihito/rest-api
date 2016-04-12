@@ -1,0 +1,83 @@
+fos_oauth_server:
+  db_driver: orm
+  client_class:        AppBundle\Entity\Client
+  access_token_class:  AppBundle\Entity\AccessToken
+  refresh_token_class: AppBundle\Entity\RefreshToken
+  auth_code_class:     AppBundle\Entity\AuthCode
+
+  service:
+    user_provider: fos_user.user_manager
+    options:
+      supported_scopes: user admin super_admin
+
+fos_rest:
+  disable_csrf_role: ROLE_API
+  param_fetcher_listener: true
+  body_listener: true
+  format_listener: true
+  format_listener:
+      enabled: true
+      rules:
+          fallback_format: json
+          exception_fallback_format: json
+  access_denied_listener:
+      json: true
+  allowed_methods_listener: true
+  routing_loader:
+      default_format: json
+      include_format: false
+  view:
+      default_engine: json
+      view_response_listener: 'force'
+      formats:
+          json : true
+      templating_formats:
+          html: true
+  exception:
+      codes:
+          'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+          'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+      messages:
+          'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+
+fos_user:
+    db_driver: orm
+    firewall_name: api
+    user_class: AppBundle\Entity\User
+    from_email:
+        address:        noreply@beercoders.com
+        sender_name:    Tactic
+    resetting:
+        email:
+            from_email:
+                address:        resetting@beercoders.com
+                sender_name:    Beer Coders Resetting
+            template: Email/password_resetting.email.twig
+
+nelmio_api_doc: ~
+
+nelmio_cors:
+    paths:
+        '^/':
+            allow_origin: ['*']
+            allow_headers: ['Authorization', 'X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"%wkhtmltopdf_bin%\""
+        options:    []
+    image:
+        enabled:    false
+
+vardius_list:
+    title: List
+    limit: 10
+
+vardius_crud:
+    db_driver: doctrine
+
+vardius_security:
+    userClass: AppBundle\Entity\User

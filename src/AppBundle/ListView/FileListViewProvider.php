@@ -35,5 +35,4 @@ class FileListViewProvider extends ListViewProvider
 
         return $listView;
     }
-
 }

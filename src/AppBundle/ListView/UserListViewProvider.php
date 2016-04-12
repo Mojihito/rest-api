@@ -43,5 +43,4 @@ class UserListViewProvider extends ListViewProvider
 
         return $listView;
     }
-
 }

@@ -1,7 +1,0 @@
-knp_snappy:
-    pdf:
-        enabled:    true
-        binary:     "\"%wkhtmltopdf_bin%\""
-        options:    []
-    image:
-        enabled:    false

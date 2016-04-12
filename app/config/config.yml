@@ -1,18 +1,9 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: dependencies.yml.yml }
     - { resource: services.yml }
-    - { resource: services/filters.yml }
-    - { resource: services/lis_view.yml }
-    - { resource: services/actions.yml }
-    - { resource: services/controllers.yml }
-    - { resource: services/forms.yml }
-    - { resource: dependencies/vardius.yml }
-    - { resource: dependencies/nelmio_api_doc.yml }
-    - { resource: dependencies/fos_user.yml }
-    - { resource: dependencies/fos_rest.yml }
-    - { resource: dependencies/fos_oauth_server.yml }
-    - { resource: dependencies/nelmio_cors.yml }
+    - { resource: crud.yml.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

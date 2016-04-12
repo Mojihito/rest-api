@@ -17,17 +17,14 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             //ExternalBundles
+            new Vardius\Bundle\ListBundle\VardiusListBundle(),
+            new Vardius\Bundle\CrudBundle\VardiusCrudBundle(),
+            new Vardius\Bundle\SecurityBundle\VardiusSecurityBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-
-            //Vardius Bundles
-            new Vardius\Bundle\ListBundle\VardiusListBundle(),
-            new Vardius\Bundle\CrudBundle\VardiusCrudBundle(),
-            new Vardius\Bundle\SecurityBundle\VardiusSecurityBundle(),
-            //Vardius Dependencies
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
 
             //Application Bundles
