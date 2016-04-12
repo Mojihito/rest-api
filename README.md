@@ -18,7 +18,11 @@ Elastic search:
 ```
 $ php app/console fos:elastica:populate
 ```
-# Propel
+# Database
+# Doctrine
+I think everybody is familiar with Doctrine
+
+## Propel
 Worth to read [Working with Symfony2 - Introduction](http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html)
 
 You now can run the following command to create the model:
@@ -44,31 +48,4 @@ php app/console propel:crud:register @AppBundle Book Author
 [Migration Workflow](http://propelorm.org/Propel/documentation/10-migrations.html)
 ```
 php app/console propel:migration:generate-diff
-```
-
-# Chat
-Run chat
-```
-php app/console chat:run
-```
-
-Example usage
-
-```javascript
-        <script src="http://autobahn.s3.amazonaws.com/js/autobahn.min.js"></script>
-        <script>
-            var conn = new ab.Session('ws://localhost:8080',
-                    function() {
-                        conn.subscribe('current_user_access_token', function(topic, data) {
-                            //you have got a message
-                            console.log(topic);
-                            console.log(data);
-                        });
-                    },
-                    function() {
-                        console.warn('WebSocket connection closed');
-                    },
-                {'skipSubprotocolCheck': true}
-            );
-        </script>
 ```
