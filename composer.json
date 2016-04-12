@@ -30,6 +30,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "vardius/crud-bundle": "^0.8.0",
         "vardius/list-bundle": "^0.6.2",
+        "vardius/security-bundle": "^0.2.1",
         "nelmio/cors-bundle": "^1.4",
         "nelmio/api-doc-bundle": "^2.12",
         "gedmo/doctrine-extensions": "^2.4",
