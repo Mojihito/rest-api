@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class CircularNormalizer extends ObjectNormalizer
 {
-    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory, NameConverterInterface $nameConverter, PropertyAccessorInterface $propertyAccessor)
+    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null, NameConverterInterface $nameConverter = null, PropertyAccessorInterface $propertyAccessor = null)
     {
         parent::__construct($classMetadataFactory, $nameConverter, $propertyAccessor);
 
