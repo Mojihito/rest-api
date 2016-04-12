@@ -39,8 +39,8 @@ class ListAction extends Action\ListAction
         $this->checkRole($controller);
 
         $request = $event->getRequest();
-        $repository = $event->getDataProvider()->getSource();
-        $listDataEvent = new ListDataEvent($repository, $request);
+        $source = $event->getDataProvider()->getSource();
+        $listDataEvent = new ListDataEvent($source, $request);
 
         /** @var ListViewProviderInterface $listViewProvider */
         $listViewProvider = $controller->get(trim($controller->getRoutePrefix(), '/') . '.list_view');
@@ -54,7 +54,7 @@ class ListAction extends Action\ListAction
         } else {
             $columns = $listView->getColumns();
             $results = $listView->getData($listDataEvent, true);
-            $results = $this->parseResults($results->toArray(), $columns, $format);
+            $results = $this->parseResults($results, $columns, $format);
 
             $params = [
                 'data' => $results,
@@ -67,7 +67,7 @@ class ListAction extends Action\ListAction
         }
 
         $paramsEvent = new ResponseEvent($params);
-        $crudEvent = new CrudEvent($repository, $controller, $paramsEvent);
+        $crudEvent = new CrudEvent($source, $controller, $paramsEvent);
 
         $dispatcher = $controller->get('event_dispatcher');
         $dispatcher->dispatch(CrudEvents::CRUD_LIST, $crudEvent);

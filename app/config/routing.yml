@@ -42,4 +42,3 @@ fos_oauth_server_token:
 vardius_crud:
     resource: "@VardiusCrudBundle/Resources/config/routing.yml"
     prefix:   /
-    defaults:  { _format: json }
