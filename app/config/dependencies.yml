@@ -77,7 +77,7 @@ vardius_list:
     limit: 10
 
 vardius_crud:
-    db_driver: doctrine
+    db_driver: orm
 
 vardius_security:
     userClass: AppBundle\Entity\User
