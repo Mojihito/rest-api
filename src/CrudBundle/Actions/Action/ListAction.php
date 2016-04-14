@@ -84,12 +84,17 @@ class ListAction extends Action\ListAction
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault('defaults', [
-            'page' => 1,
-            'limit' => null,
-            'column' => null,
-            'sort' => null,
-        ]);
+        $resolver->setDefault('defaults', function (Options $options) {
+            $format = $options['rest_route'] ? 'json' : 'html';
+
+            return [
+                '_format' => $format,
+                'page' => 1,
+                'limit' => null,
+                'column' => null,
+                'sort' => null,
+            ];
+        });
 
         $resolver->setDefault('requirements', [
             'page' => '\d+',
