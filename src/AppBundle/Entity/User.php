@@ -50,7 +50,7 @@ class User extends BaseUser
     /**
      * @var \DateTime $birth
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @Assert\NotBlank(groups={"Registration", "Profile"})
      */
