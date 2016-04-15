@@ -159,6 +159,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
         /** @var AbstractType $form */
         $form = $this->container->get('form.type.' . strtolower($section) . '_filter');
 
+        $provider->build();
         $filters = $provider->getFilters();
 
         $docFilters = [];
