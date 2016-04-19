@@ -3,6 +3,8 @@ Rest Api
 
 Symfony 3.0 REST API project skeleton with crud builder and API doc included
 
+How to work with this skeleton read: [CRUD configuration](https://github.com/Vardius/crud-bundle/blob/master/Resources/doc/configuration.md)
+
 # OAuth
 OAuth2 client create:
 ```
