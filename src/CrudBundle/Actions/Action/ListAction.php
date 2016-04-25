@@ -84,10 +84,8 @@ class ListAction extends Action\ListAction
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault('defaults', function (Options $options) {
-            return $options['rest_route'] ? [
-                '_format' => 'json',
-            ] : [
+        $resolver->setDefault('defaults', function (Options $options, $previousValue) {
+            return $options['rest_route'] ? $previousValue : [
                 '_format' => 'html',
                 'page' => 1,
                 'limit' => null,
