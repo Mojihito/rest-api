@@ -85,10 +85,10 @@ class ListAction extends Action\ListAction
         parent::configureOptions($resolver);
 
         $resolver->setDefault('defaults', function (Options $options) {
-            $format = $options['rest_route'] ? 'json' : 'html';
-
-            return [
-                '_format' => $format,
+            return $options['rest_route'] ? [
+                '_format' => 'json',
+            ] : [
+                '_format' => 'html',
                 'page' => 1,
                 'limit' => null,
                 'column' => null,
@@ -96,17 +96,15 @@ class ListAction extends Action\ListAction
             ];
         });
 
-        $resolver->setDefault('requirements', [
-            'page' => '\d+',
-            'limit' => '\d+',
-        ]);
+        $resolver->setDefault('requirements', function (Options $options) {
+            return $options['rest_route'] ? [] : [
+                'page' => '\d+',
+                'limit' => '\d+',
+            ];
+        });
 
         $resolver->setDefault('pattern', function (Options $options) {
-            if ($options['rest_route']) {
-                return '.{_format}';
-            }
-
-            return '/list/{page}/{limit}/{column}/{sort}.{_format}';
+            return $options['rest_route'] ? '.{_format}' : '/list/{page}/{limit}/{column}/{sort}.{_format}';
         });
 
         $resolver->setDefault('parameters', [
