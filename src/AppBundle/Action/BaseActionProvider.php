@@ -27,45 +27,30 @@ class BaseActionProvider extends BaseProvider
         $this
             ->addAction('list', [
                 'rest_route' => true,
-                'defaults' => [
-                    '_format' => 'json'
-                ],
                 'checkAccess' => [
                     'attributes' => ['ROLE_USER']
                 ],
             ])
             ->addAction('add', [
                 'rest_route' => true,
-                'defaults' => [
-                    '_format' => 'json'
-                ],
                 'checkAccess' => [
                     'attributes' => ['ROLE_USER']
                 ],
             ])
             ->addAction('edit', [
                 'rest_route' => true,
-                'defaults' => [
-                    '_format' => 'json'
-                ],
                 'checkAccess' => [
                     'attributes' => ['ROLE_USER']
                 ],
             ])
             ->addAction('delete', [
                 'rest_route' => true,
-                'defaults' => [
-                    '_format' => 'json'
-                ],
                 'checkAccess' => [
                     'attributes' => ['ROLE_USER']
                 ],
             ])
             ->addAction('show', [
                 'rest_route' => true,
-                'defaults' => [
-                    '_format' => 'json'
-                ],
                 'checkAccess' => [
                     'attributes' => ['ROLE_USER']
                 ],

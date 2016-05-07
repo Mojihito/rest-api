@@ -2,7 +2,7 @@
 /**
  * This file is part of the vardius/crud-bundle package.
  *
- * (c) Rafał Lorenz <vardius@gmail.com>
+ * (c) RafaĹ Lorenz <vardius@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -95,7 +95,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
         $config = [
             'resource' => true,
-            'section' => $section,
+            'section' => str_replace('-', ' ', $section),
             'description' => ucfirst($actionKey) . " action",
             'statusCodes' => [
                 200 => "OK",
@@ -159,6 +159,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
         /** @var AbstractType $form */
         $form = $this->container->get('form.type.' . strtolower($section) . '_filter');
 
+        $provider->build();
         $filters = $provider->getFilters();
 
         $docFilters = [];
@@ -176,5 +177,4 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
         return $docFilters;
     }
-
 }
