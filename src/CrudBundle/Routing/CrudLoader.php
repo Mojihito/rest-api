@@ -89,7 +89,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
     {
         $section = ucfirst(ltrim($controller->getRoutePrefix(), '/'));
         $parameters = array_key_exists('parameters', $options) ? $options['parameters'] : [];
-        $filters = $actionKey === 'list' ? $this->getFilters($section) : [];
+        $filters = $actionKey === ($actionKey === 'list' || $actionKey === 'export') ? $this->getFilters($section) : [];
         $form = $controller->getFormType();
         $input = $form ? get_class($form) : '';
 
