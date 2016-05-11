@@ -74,7 +74,7 @@ class ListAction extends Action\ListAction
 
         $responseHandler = $controller->get('vardius_crud.response.handler');
 
-        return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['list']);
+        return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['groups' => ['list']]);
     }
 
     /**
