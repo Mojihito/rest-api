@@ -1,17 +1,30 @@
 <?php
+/**
+ * This file is part of the rest-api package.
+ *
+ * (c) Rafał Lorenz <vardius@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace UserBundle\Controller;
 
-
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+/**
+ * Class ChangePasswordController
+ * @package UserBundle\Controller
+ * @author Rafał Lorenz <vardius@gmail.com>
+ */
 class ChangePasswordController extends \FOS\UserBundle\Controller\ChangePasswordController
 {
     /**
@@ -19,7 +32,16 @@ class ChangePasswordController extends \FOS\UserBundle\Controller\ChangePassword
      *  resource=false,
      *  section="Change Password",
      *  description="Change Password",
-     *  input="FOS\UserBundle\Form\Type\ChangePasswordFormType"
+     *  input="FOS\UserBundle\Form\Type\ChangePasswordFormType",
+     *  statusCodes={
+     *     200="OK",
+     *     201="Created",
+     *     400="Bad Request",
+     *     401="Unauthorized",
+     *     403="Forbidden",
+     *     404="Not Found",
+     *     500="Internal Server Error"
+     *  }
      * )
      */
     public function changePasswordAction(Request $request)

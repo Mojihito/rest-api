@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the rest-api package.
+ *
+ * (c) Rafał Lorenz <vardius@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace UserBundle\Controller;
 
@@ -13,10 +21,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
- * Controller managing the registration
- *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
+ * Class RegistrationController
+ * @package UserBundle\Controller
+ * @author Rafał Lorenz <vardius@gmail.com>
  */
 class RegistrationController extends \FOS\UserBundle\Controller\RegistrationController
 {
@@ -25,7 +32,16 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
      *  resource=false,
      *  section="Register",
      *  description="Register new user",
-     *  input="UserBundle\Form\Type\RegistrationFormType"
+     *  input="UserBundle\Form\Type\RegistrationFormType",
+     *  statusCodes={
+     *     200="OK",
+     *     201="Created",
+     *     400="Bad Request",
+     *     401="Unauthorized",
+     *     403="Forbidden",
+     *     404="Not Found",
+     *     500="Internal Server Error"
+     *  }
      * )
      */
     public function registerAction(Request $request)
@@ -83,7 +99,16 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
      * @ApiDoc(
      *  resource=false,
      *  section="Register",
-     *  description="Receive the confirmation token from user email provider, login the user"
+     *  description="Receive the confirmation token from user email provider, login the user",
+     *  statusCodes={
+     *     200="OK",
+     *     201="Created",
+     *     400="Bad Request",
+     *     401="Unauthorized",
+     *     403="Forbidden",
+     *     404="Not Found",
+     *     500="Internal Server Error"
+     *  }
      * )
      */
     public function confirmAction(Request $request, $token)

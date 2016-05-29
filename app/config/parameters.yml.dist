@@ -15,7 +15,10 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    mailer_email_from:   ~
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    wkhtmltopdf_bin: ~
+    # A website that's used for link to website in emails
+    website: localhost.dev

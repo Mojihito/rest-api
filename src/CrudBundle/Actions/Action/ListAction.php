@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the vardius/crud-bundle package.
+ * This file is part of the rest-api package.
  *
  * (c) Rafał Lorenz <vardius@gmail.com>
  *
@@ -43,7 +43,7 @@ class ListAction extends Action\ListAction
         $listDataEvent = new ListDataEvent($source, $request);
 
         /** @var ListViewProviderInterface $listViewProvider */
-        $listViewProvider = $controller->get(trim($controller->getRoutePrefix(), '/') . '.list_view');
+        $listViewProvider = $controller->get(str_replace('s/', '_', trim($controller->getRoutePrefix(), '/')) . '.list_view');
         $listView = $listViewProvider->buildListView();
 
         if ($format === 'html') {
@@ -53,8 +53,20 @@ class ListAction extends Action\ListAction
             ];
         } else {
             $columns = $listView->getColumns();
-            $results = $listView->getData($listDataEvent, true);
-            $results = $this->parseResults($results, $columns, $format);
+
+            $count = $request->get('count');
+            if ($count === 'true') {
+                $listView->setPagination(false);
+                $query = $listView->getData($listDataEvent, true, true);
+                $aliases = $query->getRootAliases();
+                $alias = array_values($aliases)[0];
+                $query = $query
+                    ->select('count(' . $alias . '.id)');
+                $results = $query->getQuery()->getSingleScalarResult();
+            } else {
+                $results = $listView->getData($listDataEvent, true);
+                $results = $this->parseResults($results, $columns, $format);
+            }
 
             $params = [
                 'data' => $results,
@@ -74,7 +86,7 @@ class ListAction extends Action\ListAction
 
         $responseHandler = $controller->get('vardius_crud.response.handler');
 
-        return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['list']);
+        return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['groups' => ['list']]);
     }
 
     /**
@@ -110,6 +122,7 @@ class ListAction extends Action\ListAction
             ['name' => 'limit', 'dataType' => 'integer', "required" => false, 'description' => 'limit value'],
             ['name' => 'column', 'dataType' => 'string', "required" => false, 'description' => 'sorts data by column name'],
             ['name' => 'sort', 'dataType' => 'string', "required" => false, 'description' => 'sort method (ASC|DESC)'],
+            ['name' => 'count', 'dataType' => 'bool', "required" => false, 'description' => 'if set actions returns count of objects (filters are available)'],
         ]);
     }
 

@@ -10,11 +10,12 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use AppBundle\Serializer\Annotation as AppSerializer;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class User
@@ -30,20 +31,42 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"show", "update", "list", "elastica"})
      */
     protected $id;
 
     /**
      * @var string
+     * @Assert\Email()
+     * @Serializer\Groups({"show", "update", "elastica"})
+     */
+    protected $email;
+
+    /**
+     * @var array
+     * @Serializer\Groups({"show", "update"})
+     */
+    protected $roles;
+
+    /**
+     * @var boolean
+     * @Serializer\Groups({"show", "update"})
+     */
+    protected $enabled;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Profile"})
+     * @Assert\NotBlank()
+     * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Profile"})
+     * @Assert\NotBlank()
+     * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $surname;
 
@@ -52,15 +75,17 @@ class User extends BaseUser
      *
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
+     * @Assert\NotBlank()
+     * @Serializer\Groups({"show", "update"})
      */
     protected $birth;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Profile"})
-     * @Assert\Url()
+     * @var File
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"delete"})
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
+     * @AppSerializer\Depth(2)
+     * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $avatar;
 
@@ -69,6 +94,7 @@ class User extends BaseUser
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
+     * @Serializer\Groups({"show", "update"})
      */
     protected $created;
 
@@ -77,6 +103,7 @@ class User extends BaseUser
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
+     * @Serializer\Groups({"show", "update"})
      */
     protected $updated;
 
@@ -135,17 +162,17 @@ class User extends BaseUser
     }
 
     /**
-     * @param string $avatar
+     * @param File $avatar
      * @return $this
      */
-    public function setAvatar($avatar)
+    public function setAvatar(File $avatar)
     {
         $this->avatar = $avatar;
         return $this;
     }
 
     /**
-     * @return string
+     * @return File
      */
     public function getAvatar()
     {
@@ -208,7 +235,7 @@ class User extends BaseUser
 
     /**
      * @return string
-     * @Serializer\VirtualProperty
+     * @Serializer\Groups({"show", "update"})
      */
     public function getFullName()
     {

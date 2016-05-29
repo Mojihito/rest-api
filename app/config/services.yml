@@ -63,11 +63,20 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    circural_normalizer:
-        class: AppBundle\Serializer\Normalizer\CircularNormalizer
+    entity_normalizer:
+        class: AppBundle\Serializer\Normalizer\EntityNormalizer
         parent: serializer.normalizer.object
         tags:
             - { name: serializer.normalizer }
+
+    serializer.annotation_loader:
+      class: AppBundle\Serializer\Mapping\Loader\AnnotationLoader
+      arguments: ["@annotations.reader"]
+
+    serializer.mapping.class_metadata_factory:
+      class: Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory
+      public: false
+      arguments: ["@serializer.annotation_loader"]
 
     fos_user.registration_subscriber:
       class: AppBundle\EventListener\FosUserListener
@@ -79,3 +88,7 @@ services:
       arguments: ["@service_container", "@request_stack"]
       tags:
           - { name: kernel.event_subscriber }
+
+    app.mailer:
+      class: AppBundle\Mailer\Mailer
+      arguments: ["@mailer", "@templating", "%mailer_email_from%", "%website%"]

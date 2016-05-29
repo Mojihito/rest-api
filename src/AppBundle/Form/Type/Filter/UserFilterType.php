@@ -11,6 +11,9 @@
 namespace AppBundle\Form\Type\Filter;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,23 +30,32 @@ class UserFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', 'email', [
+            ->add('email', TextType::class, [
                 'required' => false
             ])
-            ->add('username', 'text', [
+            ->add('name', TextType::class, [
                 'required' => false
             ])
-            ->add('name', 'text', [
+            ->add('surname', TextType::class, [
                 'required' => false
             ])
-            ->add('surname', 'text', [
-                'required' => false
-            ])
-            ->add('roles', 'text', [
+            ->add('roles', TextType::class, [
                 'required' => false,
                 'mapped' => false
             ])
-            ->add('enabled', 'checkbox', [
+            ->add('enabled', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('dateTo', DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'mapped' => false,
+                'required' => false
+            ])
+            ->add('dateFrom', DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
+                'mapped' => false,
                 'required' => false
             ])
             ->setMethod('GET');
@@ -58,13 +70,5 @@ class UserFilterType extends AbstractType
             'data_class' => 'AppBundle\Entity\User',
             'validation_group' => ['filter'],
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName()
-    {
-        return 'user_filter';
     }
 }

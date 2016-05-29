@@ -10,9 +10,11 @@
 
 namespace AppBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,17 +31,17 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', ['required' => false,])
-            ->add('email', 'email', ['required' => false,])
-            ->add('surname', 'text', ['required' => false,])
-            ->add('username', 'text', ['required' => false,])
-            ->add('avatar', 'url', ['required' => false,])
-            ->add('birth', 'date', [
+            ->add('name', TextType::class)
+            ->add('surname', TextType::class)
+            ->add('birth', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
-                'required' => false,
             ])
-            ->add('enabled', 'checkbox', ['required' => false]);
+            ->add('avatar', EntityType::class, [
+                'class' => 'AppBundle\Entity\File',
+                'choice_label' => 'id'
+            ])
+            ->add('enabled', CheckboxType::class, ['required' => false]);
     }
 
     /**
@@ -49,15 +51,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\User',
-            'validation_group' => ['Profile'],
+            'validation_group' => ['update', 'Profile'],
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return 'user';
     }
 }

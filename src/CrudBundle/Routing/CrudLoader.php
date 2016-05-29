@@ -14,6 +14,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Vardius\Bundle\CrudBundle\Actions\ActionInterface;
 use Vardius\Bundle\CrudBundle\Controller\CrudController;
@@ -87,37 +89,24 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
     protected function getDoc(CrudController $controller, $actionKey, $options)
     {
-        $section = ucfirst(ltrim($controller->getRoutePrefix(), '/'));
+        $section = ltrim($controller->getRoutePrefix(), '/');
         $parameters = array_key_exists('parameters', $options) ? $options['parameters'] : [];
-        $filters = $actionKey === 'list' ? $this->getFilters($section) : [];
+        $filters = ($actionKey === 'list' || $actionKey === 'export') ? $this->getFilters($section) : [];
         $form = $controller->getFormType();
         $input = $form ? get_class($form) : '';
 
         $config = [
             'resource' => true,
-            'section' => str_replace('-', ' ', $section),
+            'section' => ucwords(str_replace(['-', '/'], ' ', $section)),
             'description' => ucfirst($actionKey) . " action",
             'statusCodes' => [
                 200 => "OK",
                 201 => "Created",
-                202 => "Accepted",
-                203 => 'Non-Authoritative Information',
-                204 => 'No Content',
-                205 => 'Reset Content',
-                206 => 'Partial Content',
-                207 => 'Multi-Status',
                 400 => 'Bad Request',
                 401 => 'Unauthorized',
-                402 => 'Payment Required',
                 403 => 'Forbidden',
                 404 => 'Not Found',
-                405 => 'Method Not Allowed',
                 500 => 'Internal Server Error',
-                501 => 'Not Implemented',
-                502 => 'Bad Gateway',
-                503 => 'Service Unavailable',
-                504 => 'Gateway Timeout',
-                505 => 'HTTP Version Not Supported',
             ],
             'filters' => $filters,
             'parameters' => $parameters
@@ -143,21 +132,23 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
      */
     protected function getFilters($section)
     {
+        $section = str_replace('s/', '_', $section);
         $section = preg_replace('~[^\\pL\d]+~u', '_', $section);
         $section = trim($section, '-');
+        $section = strtolower($section);
 
-        if (!$this->container->has('provider.' . strtolower($section) . '_filter')) {
+        if (!$this->container->has('provider.' . $section . '_filter')) {
             return [];
         }
 
-        if (!$this->container->has('form.type.' . strtolower($section) . '_filter')) {
+        if (!$this->container->has('form.type.' . $section . '_filter')) {
             return [];
         }
 
         /** FilterProvider */
-        $provider = $this->container->get('provider.' . strtolower($section) . '_filter');
-        /** @var AbstractType $form */
-        $form = $this->container->get('form.type.' . strtolower($section) . '_filter');
+        $provider = $this->container->get('provider.' . $section . '_filter');
+        /** @var FormTypeInterface $form */
+        $form = $this->container->get('form.type.' . $section . '_filter');
 
         $provider->build();
         $filters = $provider->getFilters();
@@ -172,7 +163,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
             if (!is_callable($filter) && $filter->getType() instanceof FilterType) {
                 $name = $filter->getType()->getName();
             }
-            $docFilters[] = ['name' => $form->getName() . '[' . $key . ']', 'type' => $name];
+            $docFilters[] = ['name' => $form->getBlockPrefix() . '[' . $key . ']', 'type' => $name];
         }
 
         return $docFilters;

@@ -26,10 +26,17 @@ class UserFilterProvider extends FilterProvider
     {
         $this
             ->addFilter('email', 'text')
-            ->addFilter('username', 'text')
             ->addFilter('name', 'text')
             ->addFilter('surname', 'text')
             ->addFilter('roles', 'text')
-            ->addFilter('enabled', 'text');
+            ->addFilter('enabled', 'text')
+            ->addFilter('dateFrom', 'date', [
+                'condition' => 'gte',
+                'field' => 'created',
+            ])
+            ->addFilter('dateTo', 'date', [
+                'condition' => 'lte',
+                'field' => 'created',
+            ]);
     }
 }

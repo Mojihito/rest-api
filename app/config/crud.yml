@@ -6,9 +6,13 @@ services:
   crud_controller.users:
     class: "%vardius_crud.controller.class%"
     factory: ["@vardius_crud.controller.factory", get]
-    arguments: ['AppBundle:User', /users, '@form.type.users', null, null, '@base.actions_provider']
+    arguments: ['AppBundle:User', /users, '@form.type.users', null, null, '@user.actions_provider']
     tags:
         - { name: vardius_crud.controller }
+
+  user.actions_provider:
+    class: AppBundle\Action\UserActionProvider
+    parent: vardius_crud.action.provider
 
   users.list_view:
     class: AppBundle\ListView\UserListViewProvider
@@ -17,7 +21,7 @@ services:
   form.type.users:
       class: AppBundle\Form\Type\UserType
       tags:
-          - { name: form.type, alias: user }
+          - { name: form.type }
 
   provider.users_filter:
       class: AppBundle\Filter\UserFilterProvider
@@ -26,7 +30,7 @@ services:
   form.type.users_filter:
       class: AppBundle\Form\Type\Filter\UserFilterType
       tags:
-          - { name: form.type, alias: user_filter }
+          - { name: form.type }
 
   crud_controller.files:
     class: "%vardius_crud.controller.class%"
@@ -42,7 +46,7 @@ services:
   form.type.files:
       class: AppBundle\Form\Type\FileType
       tags:
-          - { name: form.type, alias: file }
+          - { name: form.type }
 
   provider.files_filter:
       class: AppBundle\Filter\FileFilterProvider
@@ -51,4 +55,5 @@ services:
   form.type.files_filter:
       class: AppBundle\Form\Type\Filter\FileFilterType
       tags:
-          - { name: form.type, alias: file_filter }
+          - { name: form.type }
+

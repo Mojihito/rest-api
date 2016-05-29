@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the vardius/crud-bundle package.
+ * This file is part of the rest-api package.
  *
  * (c) Rafał Lorenz <vardius@gmail.com>
  *

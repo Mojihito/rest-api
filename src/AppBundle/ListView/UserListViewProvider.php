@@ -11,6 +11,7 @@
 namespace AppBundle\ListView;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\Filter\UserFilterType;
 use JMS\Serializer\Serializer;
 use Vardius\Bundle\ListBundle\ListView\Factory\ListViewFactory;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
@@ -38,8 +39,14 @@ class UserListViewProvider extends ListViewProvider
             ->addColumn('avatar', 'property')
             ->addColumn('enabled', 'property')
             ->addColumn('roles', 'property')
-            ->addColumn('created', 'property')
-            ->addFilter('user_filter', 'provider.users_filter');
+            ->addColumn('created', 'callable', [
+                'callback' => function (User $user) {
+                    $date = $user->getCreated();
+
+                    return $date ? $date->getTimestamp() : $date;
+                },
+            ])
+            ->addFilter(UserFilterType::class, 'provider.users_filter');
 
         return $listView;
     }

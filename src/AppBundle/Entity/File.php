@@ -2,7 +2,7 @@
 /**
  * This file is part of the rest-api package.
  *
- * (c) Szymon Kunowski <szymon.kunowski@gmail.com>
+ * (c) Rafał Lorenz <vardius@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,10 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class File
  * @package AppBundle\Entity
- * @author Szymon Kunowski <szymon.kunowski@gmail.com>
+ * @author Rafał Lorenz <vardius@gmail.com>
  *
  * @ORM\Entity
- * @ORM\Table(name="file")
+ * @ORM\Table(name="files")
  * @ORM\HasLifecycleCallbacks
  */
 class File
@@ -32,17 +32,20 @@ class File
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
+     * @Serializer\Groups({"show", "update", "list", "elastica"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"show", "update"})
      */
     protected $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $path;
 
@@ -52,6 +55,7 @@ class File
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
+     * @Serializer\Groups({"show", "update"})
      */
     protected $created;
 
@@ -60,6 +64,7 @@ class File
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
+     * @Serializer\Groups({"show", "update"})
      */
     protected $updated;
 

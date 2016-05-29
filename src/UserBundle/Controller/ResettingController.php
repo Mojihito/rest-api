@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the rest-api package.
+ *
+ * (c) Rafał Lorenz <vardius@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace UserBundle\Controller;
 
@@ -15,10 +23,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Controller managing the resetting of the password
- *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
+ * Class ResettingController
+ * @package UserBundle\Controller
+ * @author Rafał Lorenz <vardius@gmail.com>
  */
 class ResettingController extends \FOS\UserBundle\Controller\ResettingController
 {
@@ -36,6 +43,15 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  },
      *  parameters={
      *      {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"}
+     *  },
+     *  statusCodes={
+     *     200="OK",
+     *     201="Created",
+     *     400="Bad Request",
+     *     401="Unauthorized",
+     *     403="Forbidden",
+     *     404="Not Found",
+     *     500="Internal Server Error"
      *  }
      * )
      */
@@ -71,7 +87,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
         $template = $this->getParameter('fos_user.resetting.email.template');
         $rendered = $this->render($template, array(
             'user' => $user,
-            'confirmationUrl' => $this->getParameter('dashboard_domain') . '/reset/' . $user->getConfirmationToken()
+            'confirmationUrl' => $this->getParameter('website') . '/reset/' . $user->getConfirmationToken()
         ));
 
         $renderedLines = explode("\n", trim($rendered));
@@ -99,7 +115,16 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  resource=false,
      *  section="Resetting",
      *  description="Reset user password",
-     *  input="FOS\UserBundle\Form\Type\ResettingFormType"
+     *  input="FOS\UserBundle\Form\Type\ResettingFormType",
+     *  statusCodes={
+     *     200="OK",
+     *     201="Created",
+     *     400="Bad Request",
+     *     401="Unauthorized",
+     *     403="Forbidden",
+     *     404="Not Found",
+     *     500="Internal Server Error"
+     *  }
      * )
      */
     public function resetAction(Request $request, $token)

@@ -14,11 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vardius\Bundle\CrudBundle\Actions\Action;
 
 /**
- * ShowAction
+ * ExportAction
  *
  * @author Rafał Lorenz <vardius@gmail.com>
  */
-class ShowAction extends Action\ShowAction
+class ExportAction extends Action\ExportAction
 {
     /**
      * @inheritDoc
@@ -27,8 +27,22 @@ class ShowAction extends Action\ShowAction
     {
         parent::configureOptions($resolver);
 
+        $resolver->setDefault('requirements', ['id' => '\d+']);
+        $resolver->setDefault('pattern', '/export/{id}');
         $resolver->setDefault('parameters', [
             ['name' => 'id', 'dataType' => 'integer', "required" => true, 'description' => 'element id'],
         ]);
+        $resolver->setDefault('defaults', [
+            "id" => null,
+            "type" => 'csv'
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'export';
     }
 }
