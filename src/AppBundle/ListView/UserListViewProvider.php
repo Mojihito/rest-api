@@ -12,8 +12,6 @@ namespace AppBundle\ListView;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\Filter\UserFilterType;
-use JMS\Serializer\Serializer;
-use Vardius\Bundle\ListBundle\ListView\Factory\ListViewFactory;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
 
 /**

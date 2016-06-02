@@ -89,6 +89,12 @@ services:
       tags:
           - { name: kernel.event_subscriber }
 
+    app.list_results_subscriber:
+      class: AppBundle\EventListener\ListResultsSubscriber
+      arguments: ["@service_container"]
+      tags:
+          - { name: kernel.event_subscriber }
+
     app.mailer:
       class: AppBundle\Mailer\Mailer
       arguments: ["@mailer", "@templating", "%mailer_email_from%", "%website%"]

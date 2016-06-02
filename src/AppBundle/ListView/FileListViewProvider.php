@@ -10,6 +10,7 @@
 
 namespace AppBundle\ListView;
 
+use AppBundle\Form\Type\Filter\FileFilterType;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
 
 /**
@@ -31,7 +32,7 @@ class FileListViewProvider extends ListViewProvider
             ->addColumn('name', 'property')
             ->addColumn('path', 'property')
             ->addColumn('created', 'property')
-            ->addFilter('file_filter', 'provider.files_filter');
+            ->addFilter(FileFilterType::class, 'provider.files_filter');
 
         return $listView;
     }
