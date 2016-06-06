@@ -100,7 +100,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
         $config = [
             'resource' => true,
-            'views' => [$matches[1]],
+            'views' => [$matches[0]],
             'section' => ucwords(str_replace(['-', '/'], ' ', $section)),
             'description' => ucfirst($actionKey) . " action",
             'statusCodes' => [
