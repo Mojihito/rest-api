@@ -87,7 +87,12 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
     protected function getDoc(CrudController $controller, $actionKey, $options)
     {
-        $section = ltrim($controller->getRoutePrefix(), '/');
+        $matches = [];
+        $section = $controller->getRoutePrefix();
+        preg_match('/v([0-9]+)/', $section, $matches);
+        $section = preg_replace('/v([0-9]+)/', '', $section);
+        $section = ltrim($section, '/');
+
         $parameters = array_key_exists('parameters', $options) ? $options['parameters'] : [];
         $filters = ($actionKey === 'list' || $actionKey === 'export') ? $this->getFilters($section) : [];
         $form = $controller->getFormType();
@@ -95,6 +100,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
         $config = [
             'resource' => true,
+            'views' => [$matches[1]],
             'section' => ucwords(str_replace(['-', '/'], ' ', $section)),
             'description' => ucfirst($actionKey) . " action",
             'statusCodes' => [
