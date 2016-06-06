@@ -2,7 +2,7 @@
 /**
  * This file is part of the rest-api package.
  *
- * (c) Rafał Lorenz <vardius@gmail.com>
+ * @author Rafał Lorenz <vardius@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,6 +10,10 @@
 
 namespace AppBundle\Action;
 
+use CrudBundle\Actions\Action\{
+    DeleteAction, EditAction, ListAction, ShowAction
+};
+use Vardius\Bundle\CrudBundle\Actions\Action\AddAction;
 use Vardius\Bundle\CrudBundle\Actions\Provider\ActionsProvider as BaseProvider;
 
 /**
@@ -25,7 +29,7 @@ class BaseActionProvider extends BaseProvider
     public function getActions()
     {
         $this
-            ->addAction('list', [
+            ->addAction(ListAction::class, [
                 'rest_route' => true,
                 'requirements' => [
                     '_format' => 'json|xml',
@@ -36,7 +40,7 @@ class BaseActionProvider extends BaseProvider
                     'attributes' => ['ROLE_USER']
                 ],
             ])
-            ->addAction('add', [
+            ->addAction(AddAction::class, [
                 'rest_route' => true,
                 'requirements' => [
                     '_format' => 'json|xml'
@@ -45,17 +49,7 @@ class BaseActionProvider extends BaseProvider
                     'attributes' => ['ROLE_USER']
                 ],
             ])
-            ->addAction('edit', [
-                'rest_route' => true,
-                'requirements' => [
-                    'id' => '\d+',
-                    '_format' => 'json|xml'
-                ],
-                'checkAccess' => [
-                    'attributes' => ['ROLE_USER']
-                ],
-            ])
-            ->addAction('delete', [
+            ->addAction(EditAction::class, [
                 'rest_route' => true,
                 'requirements' => [
                     'id' => '\d+',
@@ -65,7 +59,17 @@ class BaseActionProvider extends BaseProvider
                     'attributes' => ['ROLE_USER']
                 ],
             ])
-            ->addAction('show', [
+            ->addAction(DeleteAction::class, [
+                'rest_route' => true,
+                'requirements' => [
+                    'id' => '\d+',
+                    '_format' => 'json|xml'
+                ],
+                'checkAccess' => [
+                    'attributes' => ['ROLE_USER']
+                ],
+            ])
+            ->addAction(ShowAction::class, [
                 'rest_route' => true,
                 'requirements' => [
                     'id' => '\d+',

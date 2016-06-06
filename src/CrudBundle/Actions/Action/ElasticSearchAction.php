@@ -11,14 +11,14 @@
 namespace CrudBundle\Actions\Action;
 
 use Elastica\Filter\BoolFilter;
-use Elastica\Query\Filtered;
-use Elastica\Query\MatchAll;
+use Elastica\Query\{
+    Filtered, MatchAll
+};
+use Symfony\Component\HttpFoundation\Response;
 use Vardius\Bundle\CrudBundle\Actions\Action;
-use Vardius\Bundle\CrudBundle\Event\ActionEvent;
-use Vardius\Bundle\CrudBundle\Event\CrudEvent;
-use Vardius\Bundle\CrudBundle\Event\CrudEvents;
-use Vardius\Bundle\CrudBundle\Event\ResponseEvent;
-use Vardius\Bundle\ListBundle\Event\ListDataEvent;
+use Vardius\Bundle\CrudBundle\Event\{
+    ActionEvent, CrudEvent, CrudEvents, ListDataEvent, ResponseEvent
+};
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProviderInterface;
 
 /**
@@ -31,7 +31,7 @@ class ElasticSearchAction extends ListAction
     /**
      * {@inheritdoc}
      */
-    public function call(ActionEvent $event, $format)
+    public function call(ActionEvent $event, string $format):Response
     {
         $controller = $event->getController();
 
@@ -66,13 +66,5 @@ class ElasticSearchAction extends ListAction
         $responseHandler = $controller->get('vardius_crud.response.handler');
 
         return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['groups' => ['list']]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'search';
     }
 }

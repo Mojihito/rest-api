@@ -12,9 +12,9 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Client;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\{
+    InputArgument, InputInterface, InputOption
+};
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClientCommand extends ContainerAwareCommand
 {
-    
+
     protected function configure()
     {
         $this

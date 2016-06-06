@@ -12,11 +12,13 @@ namespace AppBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\{
+    Method, Route
+};
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, Request
+};
 
 /**
  * Class AuthController
@@ -36,6 +38,7 @@ class AuthController extends Controller
      *  requirements={
      *     {"name"="_format", "dataType"="string", "requirement"="json|xml", "description"="Response format"},
      *  },
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",
@@ -82,6 +85,7 @@ class AuthController extends Controller
      *  requirements={
      *     {"name"="_format", "dataType"="string", "requirement"="json|xml", "description"="Response format"},
      *  },
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",

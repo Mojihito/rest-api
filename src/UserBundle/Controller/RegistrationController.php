@@ -11,14 +11,14 @@
 namespace UserBundle\Controller;
 
 use FOS\UserBundle\Entity\User;
+use FOS\UserBundle\Event\{
+    FilterUserResponseEvent, FormEvent, GetResponseUserEvent
+};
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, RedirectResponse, Request
+};
 
 /**
  * Class RegistrationController
@@ -33,6 +33,7 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
      *  section="Register",
      *  description="Register new user",
      *  input="UserBundle\Form\Type\RegistrationFormType",
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",
@@ -100,6 +101,7 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
      *  resource=false,
      *  section="Register",
      *  description="Receive the confirmation token from user email provider, login the user",
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",

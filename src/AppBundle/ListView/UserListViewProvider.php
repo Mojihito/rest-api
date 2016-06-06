@@ -12,6 +12,9 @@ namespace AppBundle\ListView;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\Filter\UserFilterType;
+use Vardius\Bundle\ListBundle\Column\Types\Type\{
+    CallableType, PropertyType
+};
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
 
 /**
@@ -29,15 +32,15 @@ class UserListViewProvider extends ListViewProvider
         $listView = $this->listViewFactory->get();
 
         $listView
-            ->addColumn('id', 'property')
-            ->addColumn('username', 'property')
-            ->addColumn('email', 'property')
-            ->addColumn('name', 'property')
-            ->addColumn('surname', 'property')
-            ->addColumn('avatar', 'property')
-            ->addColumn('enabled', 'property')
-            ->addColumn('roles', 'property')
-            ->addColumn('created', 'callable', [
+            ->addColumn('id', PropertyType::class)
+            ->addColumn('username', PropertyType::class)
+            ->addColumn('email', PropertyType::class)
+            ->addColumn('name', PropertyType::class)
+            ->addColumn('surname', PropertyType::class)
+            ->addColumn('avatar', PropertyType::class)
+            ->addColumn('enabled', PropertyType::class)
+            ->addColumn('roles', PropertyType::class)
+            ->addColumn('created', CallableType::class, [
                 'callback' => function (User $user) {
                     $date = $user->getCreated();
 

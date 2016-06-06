@@ -12,8 +12,9 @@ namespace OAuthServerBundle\Controller;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, Request
+};
 
 /**
  * Class AuthorizeController
@@ -27,6 +28,7 @@ class TokenController extends \FOS\OAuthServerBundle\Controller\TokenController
      *  resource=false,
      *  section="Authorization",
      *  description="Authorize end customers or refresh token",
+     *  views = {"default"},
      *  parameters={
      *      {"name"="client_id", "dataType"="string", "required"=true, "description"="CLIENT_ID"},
      *      {"name"="client_secret", "dataType"="string", "required"=true, "description"="CLIENT_SECRET"},

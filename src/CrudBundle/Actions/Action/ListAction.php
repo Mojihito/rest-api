@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the cotton_api package.
+ * This file is part of the rest-api package.
  *
  * @author Rafał Lorenz <vardius@gmail.com>
  *
@@ -21,6 +21,7 @@ use Vardius\Bundle\CrudBundle\Event\ResponseEvent;
 use Vardius\Bundle\ListBundle\Column\ColumnInterface;
 use Vardius\Bundle\ListBundle\Event\ListDataEvent;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProviderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ListAction
@@ -32,7 +33,7 @@ class ListAction extends Action\ListAction
     /**
      * {@inheritdoc}
      */
-    public function call(ActionEvent $event, $format)
+    public function call(ActionEvent $event, string $format):Response
     {
         $controller = $event->getController();
 

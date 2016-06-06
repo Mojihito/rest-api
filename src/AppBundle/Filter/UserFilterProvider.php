@@ -11,6 +11,9 @@
 namespace AppBundle\Filter;
 
 use Vardius\Bundle\ListBundle\Filter\Provider\FilterProvider;
+use Vardius\Bundle\ListBundle\Filter\Types\Type\{
+    DateType, TextType
+};
 
 /**
  * Class UserFilterProvider
@@ -25,16 +28,16 @@ class UserFilterProvider extends FilterProvider
     public function build()
     {
         $this
-            ->addFilter('email', 'text')
-            ->addFilter('name', 'text')
-            ->addFilter('surname', 'text')
-            ->addFilter('roles', 'text')
-            ->addFilter('enabled', 'text')
-            ->addFilter('dateFrom', 'date', [
+            ->addFilter('email', TextType::class)
+            ->addFilter('name', TextType::class)
+            ->addFilter('surname', TextType::class)
+            ->addFilter('roles', TextType::class)
+            ->addFilter('enabled', TextType::class)
+            ->addFilter('dateFrom', DateType::class, [
                 'condition' => 'gte',
                 'field' => 'created',
             ])
-            ->addFilter('dateTo', 'date', [
+            ->addFilter('dateTo', DateType::class, [
                 'condition' => 'lte',
                 'field' => 'created',
             ]);

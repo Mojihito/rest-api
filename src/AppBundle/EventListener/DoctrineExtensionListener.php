@@ -10,9 +10,10 @@
 
 namespace AppBundle\EventListener;
 
+use Symfony\Component\DependencyInjection\{
+    ContainerAwareInterface, ContainerInterface
+};
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrineExtensionListener implements ContainerAwareInterface
 {

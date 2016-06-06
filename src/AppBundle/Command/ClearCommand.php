@@ -10,12 +10,13 @@
 
 namespace AppBundle\Command;
 
-use FOS\OAuthServerBundle\Model\AuthCodeManagerInterface;
-use FOS\OAuthServerBundle\Model\TokenManagerInterface;
+use FOS\OAuthServerBundle\Model\{
+    AuthCodeManagerInterface, TokenManagerInterface
+};
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\{
+    InputArgument, InputInterface, InputOption
+};
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

@@ -10,14 +10,15 @@
 
 namespace UserBundle\Controller;
 
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\Event\{
+    FilterUserResponseEvent, FormEvent, GetResponseUserEvent
+};
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, Request
+};
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -33,6 +34,7 @@ class ChangePasswordController extends \FOS\UserBundle\Controller\ChangePassword
      *  section="Change Password",
      *  description="Change Password",
      *  input="FOS\UserBundle\Form\Type\ChangePasswordFormType",
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",

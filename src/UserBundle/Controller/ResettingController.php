@@ -10,16 +10,15 @@
 
 namespace UserBundle\Controller;
 
+use FOS\UserBundle\Event\{
+    FilterUserResponseEvent, FormEvent, GetResponseUserEvent, UserInterface
+};
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Model\UserInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\{
+    JsonResponse, RedirectResponse, Request
+};
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -34,6 +33,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  resource=false,
      *  section="Resetting",
      *  description="Request reset user password: submit form and send email",
+     *  views = {"default"},
      *  requirements={
      *      {
      *          "name"="username",
@@ -116,6 +116,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  section="Resetting",
      *  description="Reset user password",
      *  input="FOS\UserBundle\Form\Type\ResettingFormType",
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",

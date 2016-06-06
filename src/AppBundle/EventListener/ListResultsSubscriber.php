@@ -13,8 +13,9 @@ namespace AppBundle\EventListener;
 use Elastica\Query;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Vardius\Bundle\ListBundle\Event\ListEvents;
-use Vardius\Bundle\ListBundle\Event\ListResultEvent;
+use Vardius\Bundle\ListBundle\Event\{
+    ListEvents, ListResultEvent
+};
 
 /**
  * Class ListResultsSubscriber

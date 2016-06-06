@@ -13,15 +13,13 @@ namespace CrudBundle\Routing;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Vardius\Bundle\CrudBundle\Actions\ActionInterface;
 use Vardius\Bundle\CrudBundle\Controller\CrudController;
 use Vardius\Bundle\CrudBundle\Routing\CrudPool;
 use Vardius\Bundle\ListBundle\Filter\Filter;
-use Vardius\Bundle\ListBundle\Filter\Types\FilterType;
+use Vardius\Bundle\ListBundle\Filter\Types\AbstractType;
 
 /**
  * CrudLoader
@@ -160,8 +158,9 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
          */
         foreach ($filters as $key => $filter) {
             $name = 'callable';
-            if (!is_callable($filter) && $filter->getType() instanceof FilterType) {
-                $name = $filter->getType()->getName();
+            if (!is_callable($filter) && $filter->getType() instanceof AbstractType) {
+                $class = get_class($filter->getType());
+                $name = strtolower(rtrim(substr($class, strrpos($class, '\\') + 1), 'Type'));
             }
             $docFilters[] = ['name' => $form->getBlockPrefix() . '[' . $key . ']', 'type' => $name];
         }

@@ -37,12 +37,4 @@ class ExportAction extends Action\ExportAction
             "type" => 'csv'
         ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'export';
-    }
 }

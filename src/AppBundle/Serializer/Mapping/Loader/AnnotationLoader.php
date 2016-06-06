@@ -10,10 +10,10 @@
 
 namespace AppBundle\Serializer\Mapping\Loader;
 
+use AppBundle\Serializer\Annotation\Depth;
 use AppBundle\Serializer\Mapping\AttributeMetadata;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Serializer\Annotation\Groups;
-use AppBundle\Serializer\Annotation\Depth;
 use Symfony\Component\Serializer\Exception\MappingException;
 use Symfony\Component\Serializer\Mapping\ClassMetadataInterface;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;

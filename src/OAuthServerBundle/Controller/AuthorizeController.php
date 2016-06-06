@@ -11,8 +11,9 @@
 namespace OAuthServerBundle\Controller;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{
+    Request, Response
+};
 
 /**
  * Class AuthorizeController
@@ -26,6 +27,7 @@ class AuthorizeController extends \FOS\OAuthServerBundle\Controller\AuthorizeCon
      *  resource=false,
      *  section="Authorization",
      *  description="Authorize end customers",
+     *  views = {"default"},
      *  parameters={
      *      {"name"="client_id", "dataType"="string", "required"=true, "description"="CLIENT_ID"},
      *      {"name"="response_type", "dataType"="string", "required"=true, "description"="Response type, pattern=(code|token)"},
