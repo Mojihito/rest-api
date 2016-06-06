@@ -13,6 +13,7 @@ namespace AppBundle\Action;
 use CrudBundle\Actions\Action\{
     DeleteAction, EditAction, ListAction, ShowAction
 };
+use Doctrine\Common\Collections\ArrayCollection;
 use Vardius\Bundle\CrudBundle\Actions\Action\AddAction;
 use Vardius\Bundle\CrudBundle\Actions\Provider\ActionsProvider as BaseProvider;
 
@@ -26,7 +27,7 @@ class BaseActionProvider extends BaseProvider
     /**
      * Provides actions for controller
      */
-    public function getActions()
+    public function getActions():ArrayCollection
     {
         $this
             ->addAction(ListAction::class, [

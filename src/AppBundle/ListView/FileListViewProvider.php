@@ -15,6 +15,7 @@ use AppBundle\Form\Type\Filter\FileFilterType;
 use Vardius\Bundle\ListBundle\Column\Types\Type\{
     CallableType, PropertyType
 };
+use Vardius\Bundle\ListBundle\ListView\ListView;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
 
 /**
@@ -27,7 +28,7 @@ class FileListViewProvider extends ListViewProvider
     /**
      * @inheritDoc
      */
-    public function buildListView()
+    public function buildListView():ListView
     {
         $listView = $this->listViewFactory->get();
 

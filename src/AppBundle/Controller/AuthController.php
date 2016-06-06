@@ -12,9 +12,8 @@ namespace AppBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\{
-    Method, Route
-};
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\{
     JsonResponse, Request
@@ -68,7 +67,6 @@ class AuthController extends Controller
                 'data' => $user,
                 'lastActivity' => $redis->get('user_old_' . $user->getId())
             ];
-
 
             return $responseHandler->getResponse($request->get('_format'), null, null, $params, 200, [], ['groups' => ['show']]);
         }
