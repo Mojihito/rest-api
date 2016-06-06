@@ -1,29 +1,22 @@
 <?php
-/**
- * This file is part of the rest-api package.
- *
- * (c) Rafał Lorenz <vardius@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace UserBundle\Controller;
 
-use FOS\UserBundle\Entity\User;
 use FOS\UserBundle\Event\{
     FilterUserResponseEvent, FormEvent, GetResponseUserEvent
 };
 use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Model\UserInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\{
-    JsonResponse, RedirectResponse, Request
+    JsonResponse, Request
 };
 
 /**
- * Class RegistrationController
- * @package UserBundle\Controller
- * @author Rafał Lorenz <vardius@gmail.com>
+ * Controller managing the registration
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ * @author Christophe Coevoet <stof@notk.org>
  */
 class RegistrationController extends \FOS\UserBundle\Controller\RegistrationController
 {
@@ -54,7 +47,7 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
 
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = $userManager->createUser();
         $user->setEnabled(true);
 

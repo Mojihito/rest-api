@@ -14,8 +14,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Vardius\Bundle\CrudBundle\Event\{
-    CrudEvent, CrudEvents, ListDataEvent
+    CrudEvent, CrudEvents
 };
+use Vardius\Bundle\ListBundle\Event\ListDataEvent;
 use Vardius\Bundle\ListBundle\ListView\ListView;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProvider;
 

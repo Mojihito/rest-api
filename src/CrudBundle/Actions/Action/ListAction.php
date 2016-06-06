@@ -11,17 +11,17 @@
 namespace CrudBundle\Actions\Action;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\{
+    Options, OptionsResolver
+};
 use Vardius\Bundle\CrudBundle\Actions\Action;
-use Vardius\Bundle\CrudBundle\Event\ActionEvent;
-use Vardius\Bundle\CrudBundle\Event\CrudEvent;
-use Vardius\Bundle\CrudBundle\Event\CrudEvents;
-use Vardius\Bundle\CrudBundle\Event\ResponseEvent;
+use Vardius\Bundle\CrudBundle\Event\{
+    ActionEvent, CrudEvent, CrudEvents, ResponseEvent
+};
 use Vardius\Bundle\ListBundle\Column\ColumnInterface;
 use Vardius\Bundle\ListBundle\Event\ListDataEvent;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProviderInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ListAction

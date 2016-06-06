@@ -11,10 +11,7 @@
 namespace OAuthServerBundle\Controller;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\{
-    JsonResponse, Request
-};
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AuthorizeController

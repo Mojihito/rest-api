@@ -1,30 +1,18 @@
 <?php
-/**
- * This file is part of the rest-api package.
- *
- * (c) Rafał Lorenz <vardius@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace UserBundle\Controller;
 
-use FOS\UserBundle\Event\{
-    FilterUserResponseEvent, FormEvent, GetResponseUserEvent, UserInterface
-};
-use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Model\UserInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\{
-    JsonResponse, RedirectResponse, Request
+    JsonResponse, Request
 };
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class ResettingController
- * @package UserBundle\Controller
- * @author Rafał Lorenz <vardius@gmail.com>
+ * Controller managing the resetting of the password
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ * @author Christophe Coevoet <stof@notk.org>
  */
 class ResettingController extends \FOS\UserBundle\Controller\ResettingController
 {
@@ -33,7 +21,6 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  resource=false,
      *  section="Resetting",
      *  description="Request reset user password: submit form and send email",
-     *  views = {"default"},
      *  requirements={
      *      {
      *          "name"="username",
@@ -44,6 +31,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  parameters={
      *      {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"}
      *  },
+     *  views = {"default"},
      *  statusCodes={
      *     200="OK",
      *     201="Created",

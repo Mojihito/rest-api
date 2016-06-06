@@ -11,14 +11,14 @@
 namespace CrudBundle\Actions\Action;
 
 use Elastica\Filter\BoolFilter;
-use Elastica\Query\{
-    Filtered, MatchAll
-};
+use Elastica\Query\Filtered;
+use Elastica\Query\MatchAll;
 use Symfony\Component\HttpFoundation\Response;
 use Vardius\Bundle\CrudBundle\Actions\Action;
 use Vardius\Bundle\CrudBundle\Event\{
-    ActionEvent, CrudEvent, CrudEvents, ListDataEvent, ResponseEvent
+    ActionEvent, CrudEvent, CrudEvents, ResponseEvent
 };
+use Vardius\Bundle\ListBundle\Event\ListDataEvent;
 use Vardius\Bundle\ListBundle\ListView\Provider\ListViewProviderInterface;
 
 /**
