@@ -19,3 +19,8 @@ USER symfony
 WORKDIR /app
 
 COPY php-fpm.conf /etc/php-fpm.conf
+
+COPY deploy.sh /tmp/deploy.sh
+RUN chmod +x /tmp/deploy.sh
+
+CMD ["/tmp/deploy.sh"]

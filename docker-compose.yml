@@ -1,24 +1,7 @@
-nginx:
-  build: docker/nginx
-  ports:
-    - "8080:80"
-  links:
-    - php
-  volumes:
-    - ./:/app
- 
-php:
-  build: docker/php-fpm
-  volumes:
-    - ./:/app
-  working_dir: /app
-
 mysql:
-  build: docker/mysql
+  image: mysql
   ports:
     - "3306:3306"
-  links:
-    - php
   environment:
     MYSQL_DATABASE: symfony
     MYSQL_USER: user
@@ -34,6 +17,21 @@ phpmyadmin:
   restart: always
   ports:
     - 8090:80
+
+php:
+  build: docker/php-fpm
+  volumes:
+    - ./:/app
+  working_dir: /app
+
+nginx:
+  build: docker/nginx
+  ports:
+    - "8080:80"
+  links:
+    - php
+  volumes:
+    - ./:/app
 
 redis:
   build: docker/redis
