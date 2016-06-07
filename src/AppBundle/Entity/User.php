@@ -82,7 +82,7 @@ class User extends BaseUser
 
     /**
      * @var File
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"delete"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"remove"})
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
      * @AppSerializer\Depth(2)
      * @Serializer\Groups({"show", "update", "elastica"})
