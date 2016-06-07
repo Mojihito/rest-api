@@ -14,9 +14,13 @@ php:
   working_dir: /app
 
 mysql:
-  image: mysql
+  image: mysql:latest
   environment:
-     - MYSQL_ROOT_PASSWORD=password
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_USER: user
+    MYSQL_PASSWORD: pass
+  ports:
+    - "3306:3306"
 
 redis:
   build: docker/redis
