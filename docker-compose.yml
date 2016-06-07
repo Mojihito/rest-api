@@ -23,6 +23,17 @@ mysql:
     MYSQL_PASSWORD: pass
     MYSQL_DATABASE: symfony
 
+phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: myadmin
+  links:
+    - mysql
+  environment:
+    - PMA_ARBITRARY=1
+  restart: always
+  ports:
+    - 8090:80
+
 redis:
   build: docker/redis
   ports:
