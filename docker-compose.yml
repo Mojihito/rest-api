@@ -14,14 +14,14 @@ nginx:
     - ./:/app
 
 mysql:
-  image: mysql
+  image: mysql:5.7
   ports:
     - "3306:3306"
   environment:
-    MYSQL_DATABASE: symfony
-    MYSQL_USER: user
-    MYSQL_PASSWORD: pass
-    MYSQL_ROOT_PASSWORD: password
+    - MYSQL_DATABASE=symfony
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=pass
+    - MYSQL_ROOT_PASSWORD=password
 
 phpmyadmin:
   image: phpmyadmin/phpmyadmin:latest
