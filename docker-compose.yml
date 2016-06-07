@@ -20,10 +20,6 @@ mysql:
     MYSQL_USER: user
     MYSQL_PASSWORD: pass
     MYSQL_DATABASE: symfony
-  volumes:
-    - ./mysql/:/var/lib/mysql
-  ports:
-    - "3306:3306"
 
 redis:
   build: docker/redis
