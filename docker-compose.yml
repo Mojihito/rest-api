@@ -14,7 +14,7 @@ php:
   working_dir: /app
 
 mysql:
-  image: mysql:latest
+  build: docker/mysql
   command: mysqld --port 3386
   expose:
     - "3306"
