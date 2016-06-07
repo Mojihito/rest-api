@@ -25,9 +25,8 @@ mysql:
 
 phpmyadmin:
   image: phpmyadmin/phpmyadmin:latest
-  container_name: myadmin
   links:
-    - mysql
+    - mysql:mysql
   environment:
     - PMA_ARBITRARY=1
   restart: always
