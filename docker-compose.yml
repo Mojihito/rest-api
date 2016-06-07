@@ -19,6 +19,8 @@ mysql:
     - "3306"
   ports:
     - "3306:3306"
+  links:
+    - php
   environment:
     MYSQL_DATABASE: symfony
     MYSQL_USER: user
