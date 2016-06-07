@@ -24,8 +24,8 @@ mysql:
     MYSQL_DATABASE: symfony
 
 phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: myadmin
+  image: phpmyadmin/phpmyadmin:latest
+  container_name: myadmin
   links:
     - mysql
   environment:
