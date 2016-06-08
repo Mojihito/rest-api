@@ -3,6 +3,8 @@ php:
   volumes:
     - ./:/app
   working_dir: /app
+  links:
+    - mysql:mysql
 
 nginx:
   build: docker/nginx
