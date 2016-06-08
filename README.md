@@ -17,7 +17,7 @@ We are using the github [issue tracker](https://github.com/BeerCoders/rest-api/i
 HOW TO USE
 ==================================================
 
-To set up server configure files: [parameters.yml](app/config/parameters.yml) and your nginx host at [nginx.conf](docker/nginx/nginx.conf)
+To set up server configure files: `parameters.yml` and your nginx host at [nginx.conf](docker/nginx/nginx.conf)
 How to work with this skeleton read: [CRUD configuration](https://github.com/Vardius/crud-bundle/blob/master/Resources/doc/configuration.md)
 
 How to work with:
