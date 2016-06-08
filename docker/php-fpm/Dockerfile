@@ -12,11 +12,11 @@ RUN docker-php-ext-install -j$(nproc) iconv intl xml soap mcrypt opcache pdo pdo
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install -j$(nproc) gd
 
+RUN apt-get update && apt-get install -y netcat
+
 COPY deploy.sh /tmp/deploy.sh
 
 RUN chmod +x /tmp/deploy.sh
-
-CMD ["/tmp/deploy.sh"]
 
 RUN useradd -ms /bin/bash symfony
  
@@ -25,3 +25,5 @@ USER symfony
 WORKDIR /app
 
 COPY php-fpm.conf /etc/php-fpm.conf
+
+CMD ["/tmp/deploy.sh"]
