@@ -28,15 +28,42 @@ php bin/console vardius:crud:generate AppBundle Book Author
 ## Propel
 Worth to read [Working with Symfony2 - Introduction](http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html)
 
+Update `AppKernel.php`
+```php
+  new Propel\Bundle\PropelBundle\PropelBundle(),
+```
+Configure `config.yml`
+```yml
+# Propel Configuration
+propel:
+    database:
+        connections:
+            default:
+                adapter: mysql
+                classname: Propel\Runtime\Connection\ConnectionWrapper
+                dsn: mysql:host=%database_host%;dbname=%database_name%;charset=UTF8
+                user: %database_user%
+                password: %database_password%
+                attributes:
+    runtime:
+        defaultConnection: default
+        connections:
+            - default
+    generator:
+        defaultConnection: default
+        connections:
+            - default
+```
+
 You now can run the following command to create the model:
 ```
-$ php bin/console propel:build
+$ php bin/console propel:sql:build
 ```
 To create SQL, run the command `propel:build --insert-sql` or use migration commands if you have an existing schema in your database.
 
 Run the following command to generate an XML schema from your default database:
 ```
-php bin/console propel:reverse
+php bin/console propel:database:reverse
 ```
 You can generate stub classes based on your schema.xml in a given bundle:
 ```
@@ -45,5 +72,5 @@ php app/console vardius:crud:generate AppBundle Book Author
 ### Migrations
 [Migration Workflow](http://propelorm.org/Propel/documentation/10-migrations.html)
 ```
-php bin/console propel:migration:generate-diff
+php bin/console propel:migration:diff
 ```

@@ -5,6 +5,11 @@ Install `docker`, `docker-compose` and we propose to install also `docker-machin
 
 # Docker
 
+Update docker-compose:
+```
+$ sudo pip install --upgrade docker-compose
+```
+
 Build your containers:
 ```
 $ docker-compose build
