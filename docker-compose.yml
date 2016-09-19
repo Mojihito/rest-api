@@ -1,67 +1,81 @@
-php:
-  build: docker/php-fpm
-  volumes:
-    - ./:/app
-  working_dir: /app
-  links:
-    - mysql:mysql
+version: '2'
 
-nginx:
-  build: docker/nginx
-  ports:
-    - "8080:80"
-  links:
-    - php
-  volumes:
-    - ./:/app
+volumes:
+   symfony_cache:
+   symfony_logs:
 
-mysql:
-  image: mysql:5.7
-  ports:
-    - "3306:3306"
-  environment:
-    - MYSQL_DATABASE=symfony
-    - MYSQL_USER=user
-    - MYSQL_PASSWORD=pass
-    - MYSQL_ROOT_PASSWORD=password
+services:
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=symfony
+      - MYSQL_USER=symfony
+      - MYSQL_PASSWORD=password
+    ports:
+      - "33306:3306"
 
-phpmyadmin:
-  image: phpmyadmin/phpmyadmin:latest
-  links:
-    - mysql:mysql
-  environment:
-    - PMA_ARBITRARY=1
-  restart: always
-  ports:
-    - 8090:80
+  nginx:
+    build: nginx
+    container_name: nginx
+    volumes_from:
+      - php-fpm
+    ports:
+      - "8080:80"
+    links:
+      - php-fpm
 
-redis:
-  build: docker/redis
-  ports:
-    - "6379"
+  php-fpm:
+    build: php-fpm
+    container_name: php-fpm
+    volumes:
+      - /.:/var/www/rest_api
+      - symfony_cache:/var/www/rest_api/app/cache
+      - symfony_logs:/var/www/rest_api/app/logs
+    links:
+      - mysql
 
-elasticsearch:
-  image: elasticsearch:latest
-  command: elasticsearch -Des.network.host=0.0.0.0
-  ports:
-    - "9200:9200"
-    - "9300:9300"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    links:
+      - mysql:mysql
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8090:80
 
-logstash:
-  image: logstash:latest
-  command: logstash -f /etc/logstash/conf.d/logstash.conf
-  volumes:
-    - ./docker/logstash:/etc/logstash/conf.d
-  ports:
-    - "5000:5000"
-  links:
-    - elasticsearch
+  redis:
+    build: docker/redis
+    ports:
+      - "6379"
 
-kibana:
-  build: docker/kibana
-  volumes:
-    - ./docker/kibana/config/:/opt/kibana/config/
-  ports:
-    - "5601:5601"
-  links:
-    - elasticsearch
+  elasticsearch:
+    image: elasticsearch:latest
+    command: elasticsearch -Des.network.host=0.0.0.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash:
+    image: logstash:latest
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./docker/logstash:/etc/logstash/conf.d
+    ports:
+      - "5000:5000"
+    links:
+      - elasticsearch
+
+  kibana:
+    build: docker/kibana
+    volumes:
+      - ./docker/kibana/config/:/opt/kibana/config/
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
