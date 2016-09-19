@@ -36,11 +36,13 @@ class UserType extends AbstractType
             ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('birth', DateType::class, [
                 'input' => 'timestamp',
+                'required' => false,
                 'required' => false
             ])
             ->add('avatar', EntityType::class, [
                 'class' => 'AppBundle\Entity\File',
-                'choice_label' => 'id'
+                'choice_label' => 'id',
+                'required' => false
             ]);
     }
 
