@@ -57,7 +57,6 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank()
      * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $name;
@@ -65,7 +64,6 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank()
      * @Serializer\Groups({"show", "update", "elastica"})
      */
     protected $surname;
@@ -75,7 +73,6 @@ class User extends BaseUser
      *
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
-     * @Assert\NotBlank()
      * @Serializer\Groups({"show", "update"})
      */
     protected $birth;
