@@ -10,7 +10,7 @@
 
 namespace AppBundle\Form\Type\Filter;
 
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Form\Type\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
     CheckboxType, DateType, TextType
 };
@@ -47,14 +47,12 @@ class UserFilterType extends AbstractType
                 'required' => false
             ])
             ->add('dateTo', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
+                'input' => 'timestamp',
                 'mapped' => false,
                 'required' => false
             ])
             ->add('dateFrom', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
+                'input' => 'timestamp',
                 'mapped' => false,
                 'required' => false
             ])

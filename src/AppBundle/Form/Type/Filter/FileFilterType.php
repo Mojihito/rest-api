@@ -10,7 +10,7 @@
 
 namespace AppBundle\Form\Type\Filter;
 
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Form\Type\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

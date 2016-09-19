@@ -33,7 +33,7 @@ class UserFilterProvider extends FilterProvider
             ->addFilter('name', TextType::class)
             ->addFilter('surname', TextType::class)
             ->addFilter('roles', TextType::class)
-            ->addFilter('enabled', TextType::class)
+            ->addFilter('enabled', PropertyType::class)
             ->addFilter('dateFrom', DateType::class, [
                 'condition' => 'gte',
                 'field' => 'created',

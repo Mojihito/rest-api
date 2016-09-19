@@ -43,6 +43,13 @@ class FileListViewProvider extends ListViewProvider
                     return $date ? $date->getTimestamp() : $date;
                 },
             ])
+            ->addColumn('updated', CallableType::class, [
+                'callback' => function (User $user) {
+                    $updated = $user->getUpdated();
+
+                    return $updated ? $updated->getTimestamp() : $updated;
+                }
+            ])
             ->addFilter(FileFilterType::class, 'provider.files_filter');
 
         return $listView;

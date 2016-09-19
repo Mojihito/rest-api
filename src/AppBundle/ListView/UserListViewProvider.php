@@ -41,12 +41,26 @@ class UserListViewProvider extends ListViewProvider
             ->addColumn('avatar', PropertyType::class)
             ->addColumn('enabled', PropertyType::class)
             ->addColumn('roles', PropertyType::class)
+            ->addColumn('birth', CallableType::class, [
+                'callback' => function (User $user) {
+                    $date = $user->getCreated();
+
+                    return $date ? $date->getTimestamp() : $date;
+                },
+            ])
             ->addColumn('created', CallableType::class, [
                 'callback' => function (User $user) {
                     $date = $user->getCreated();
 
                     return $date ? $date->getTimestamp() : $date;
                 },
+            ])
+            ->addColumn('updated', CallableType::class, [
+                'callback' => function (User $user) {
+                    $updated = $user->getUpdated();
+
+                    return $updated ? $updated->getTimestamp() : $updated;
+                }
             ])
             ->addFilter(UserFilterType::class, 'provider.users_filter');
 

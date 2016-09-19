@@ -6,7 +6,7 @@ services:
   crud_controller.users:
     class: "%vardius_crud.controller.class%"
     factory: ["@vardius_crud.controller.factory", get]
-    arguments: ['AppBundle:User', /v1/users, '@form.type.users', null, null, '@user.actions_provider']
+    arguments: ['AppBundle:User', /users, '@form.type.users', null, null, '@user.actions_provider']
     tags:
         - { name: vardius_crud.controller }
 
@@ -35,7 +35,7 @@ services:
   crud_controller.files:
     class: "%vardius_crud.controller.class%"
     factory: ["@vardius_crud.controller.factory", get]
-    arguments: ['AppBundle:File', /v1/files, '@form.type.files', null, null, '@base.actions_provider']
+    arguments: ['AppBundle:File', /files, '@form.type.files', null, null, '@base.actions_provider']
     tags:
         - { name: vardius_crud.controller }
 

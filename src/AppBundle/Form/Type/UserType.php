@@ -11,7 +11,6 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
     CheckboxType, DateType, TextType
 };
@@ -31,17 +30,18 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('surname', TextType::class)
+            ->add('email', TextType::class, ['required' => false])
+            ->add('name', TextType::class, ['required' => false])
+            ->add('surname', TextType::class, ['required' => false])
+            ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('birth', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
+                'input' => 'timestamp',
+                'required' => false
             ])
             ->add('avatar', EntityType::class, [
                 'class' => 'AppBundle\Entity\File',
                 'choice_label' => 'id'
-            ])
-            ->add('enabled', CheckboxType::class, ['required' => false]);
+            ]);
     }
 
     /**

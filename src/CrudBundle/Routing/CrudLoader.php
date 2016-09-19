@@ -100,7 +100,6 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
 
         $config = [
             'resource' => true,
-            'views' => [$matches[0]],
             'section' => ucwords(str_replace(['-', '/'], ' ', $section)),
             'description' => ucfirst($actionKey) . " action",
             'statusCodes' => [
@@ -115,6 +114,10 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
             'filters' => $filters,
             'parameters' => $parameters
         ];
+
+        if (!empty($matches)) {
+            $config['views'] = [$matches[0]];
+        }
 
         $action = $controller->getAction($actionKey);
         $options = $action->getOptions();
@@ -166,7 +169,7 @@ class CrudLoader extends \Vardius\Bundle\CrudBundle\Routing\CrudLoader implement
             $name = 'callable';
             if (!is_callable($filter) && $filter->getType() instanceof AbstractType) {
                 $class = get_class($filter->getType());
-                $name = strtolower(rtrim(substr($class, strrpos($class, '\\') + 1), 'Type'));
+                $name = strtolower(str_replace('Type', '', substr($class, strrpos($class, '\\') + 1)));
             }
             $docFilters[] = ['name' => $form->getBlockPrefix() . '[' . $key . ']', 'type' => $name];
         }
