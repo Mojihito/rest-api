@@ -59,19 +59,13 @@ class AuthController extends Controller
     public function meAction(Request $request)
     {
         $responseHandler = $this->get('vardius_crud.response.handler');
-        $redis = $this->get('snc_redis.default');
         $user = $this->getUser();
 
         if ($user) {
-            $params = [
-                'data' => $user,
-                'lastActivity' => $redis->get('user_old_' . $user->getId())
-            ];
-
-            return $responseHandler->getResponse($request->get('_format'), null, null, $params, 200, [], ['groups' => ['show']]);
+            return $responseHandler->getResponse($request->get('_format'), '', '', $user, 200, [], ['groups' => ['show']]);
         }
 
-        return $responseHandler->getResponse($request->get('_format'), null, null, ['message' => 'User is not identified'], 404);
+        return $responseHandler->getResponse($request->get('_format'), '', '', ['message' => 'User is not identified'], 404);
     }
 
     /**
@@ -115,9 +109,9 @@ class AuthController extends Controller
             $entityManager->remove($accessToken);
             $entityManager->flush();
 
-            return $responseHandler->getResponse($request->get('_format'), null, null, ['message' => 'Revoked access for token: ' . $token]);
+            return $responseHandler->getResponse($request->get('_format'), '', '', ['message' => 'Revoked access for token: ' . $token]);
         }
 
-        return $responseHandler->getResponse($request->get('_format'), null, null, ['message' => 'User is not identified'], 404);
+        return $responseHandler->getResponse($request->get('_format'), '', '', ['message' => 'User is not identified'], 404);
     }
 }
