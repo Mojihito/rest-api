@@ -37,7 +37,11 @@ class RemoveNotSubmittedFieldListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($form->all() as $key => $name) {
+        foreach ($form->all() as $key => $field) {
+            $config = $field->getConfig();
+            if($config->hasOption('required') && $config->getOption('required') === true){
+                continue;
+            }
             if (!array_key_exists($key, $data)) {
                 $form->remove($key);
             }
