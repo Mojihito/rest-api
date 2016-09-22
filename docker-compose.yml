@@ -73,8 +73,6 @@ services:
 
   redis:
     build: docker/redis
-    ports:
-      - "6379"
 
   elasticsearch:
     image: elasticsearch:latest
