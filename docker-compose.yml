@@ -34,7 +34,7 @@ services:
     build: php-fpm
     container_name: php-fpm
     volumes:
-      - /.:/var/www/rest_api
+      - ./:/var/www/rest_api
       - symfony_cache:/var/www/rest_api/app/cache
       - symfony_logs:/var/www/rest_api/app/logs
     links:
