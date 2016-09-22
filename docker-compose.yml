@@ -35,8 +35,8 @@ services:
     container_name: php-fpm
     volumes:
       - ./:/var/www/rest_api
-      - symfony_cache:/var/www/rest_api/app/cache
-      - symfony_logs:/var/www/rest_api/app/logs
+      - symfony_cache:/var/www/rest_api/var/cache
+      - symfony_logs:/var/www/rest_api/var/logs
     links:
       - mysql
       - rabbitmq
