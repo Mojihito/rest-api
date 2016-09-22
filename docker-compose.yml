@@ -3,6 +3,7 @@ version: '2'
 volumes:
    symfony_cache:
    symfony_logs:
+   symfony_sessions:
    mysql_data:
    rabbit_data:
 
@@ -37,6 +38,7 @@ services:
       - ./:/var/www/rest_api
       - symfony_cache:/var/www/rest_api/var/cache
       - symfony_logs:/var/www/rest_api/var/logs
+      - symfony_sessions:/var/www/rest_api/var/sessions
     links:
       - mysql
       - rabbitmq
