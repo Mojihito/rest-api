@@ -1,0 +1,67 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 5.6
+  - 7.0
+
+env:
+  global:
+    # Set build specific variables ...
+    - SOURCE_DIR=src
+    - VHOST_FILE=.travis.vhost
+    - VHOST_CONF=travis.conf
+    - VHOST_URL=travis.dev
+
+install:
+  # Install Apache web server and FastCGI module ...
+  - sudo apt-get install apache2 libapache2-mod-fastcgi > /dev/null
+
+before_script:
+  # Enable PHP-FPM and FastCGI ...
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # Disable Xdebug ...
+  - phpenv config-rm xdebug.ini
+  # Configure application's virtual host ...
+  - sudo cp -f $VHOST_FILE /etc/apache2/sites-available/$VHOST_CONF
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/$VHOST_CONF
+  - sudo sed -e "s?%VHOST_URL%?$VHOST_URL?g" --in-place /etc/apache2/sites-available/$VHOST_CONF
+  - echo "127.0.0.1       $VHOST_URL" | sudo tee -a /etc/hosts
+  - sudo a2enmod rewrite
+  - sudo a2ensite $VHOST_CONF
+  - sudo service apache2 restart
+  # Set application parameters ...
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  # Composer install ...
+  - travis_retry composer install --no-interaction
+  # Remove application cache and logs ...
+  - rm -Rf app/cache/*
+  - rm -Rf app/logs/*
+  # Prepare application cache ...
+  - php app/console cache:warm --env=test
+  # Grant application cache and logs permissions ...
+  - chmod -Rf 777 app/cache/
+  - chmod -Rf 777 app/logs/
+  # Install application assets ...
+  - php app/console assets:install --symlink --relative --env=test
+  - php app/console assetic:dump --no-debug --env=test
+  # Create application database ...
+  - php app/console doctrine:schema:create --env=test
+  # Update application doctrine entities ...
+  - php app/console doctrine:generate:entities ApplicationTravisBundle --no-backup --env=test
+  # Load application data fixtures ...
+  - php app/console doctrine:fixtures:load --no-interaction --no-debug --env=test
+
+script:
+  # Check coding standards ...
+  - bin/php-cs-fixer fix $SOURCE_DIR --dry-run --diff --verbose --fixers=-yoda_conditions,-phpdoc_align,short_array_syntax
+  # Run phpspec tests ...
+  - bin/phpspec run --no-ansi --format=dot
+  # Run behat tests ...
+  - bin/behat --profile=default -f progress
