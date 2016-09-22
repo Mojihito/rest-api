@@ -3,6 +3,8 @@ version: '2'
 volumes:
    symfony_cache:
    symfony_logs:
+   mysql_data:
+   rabbit_data:
 
 services:
   mysql:
@@ -15,6 +17,8 @@ services:
       - MYSQL_PASSWORD=password
     ports:
       - "33306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   nginx:
     build: nginx
@@ -35,19 +39,35 @@ services:
       - symfony_logs:/var/www/rest_api/app/logs
     links:
       - mysql
+      - rabbitmq
+      - redis
+      - elasticsearch
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
     links:
-      - mysql:mysql
+      - wldev-mysql:mysql
     environment:
       - MYSQL_USERNAME=root
       - MYSQL_ROOT_PASSWORD=root
       - PMA_ARBITRARY=1
-    restart: always
     ports:
       - 8090:80
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+    ports:
+      - "25671:5672"
+      - "25672:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: rabbit
+      RABBITMQ_DEFAULT_USER: ruser
+      RABBITMQ_DEFAULT_PASS: rpass
+      RABBITMQ_DEFAULT_VHOST: /
 
   redis:
     build: docker/redis
