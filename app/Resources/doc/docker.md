@@ -77,7 +77,7 @@ If this does not help, you may want to try this also [Sharing settings](https://
 | mysql | 33306:3306 | mysql |
 | phpmyadmin | 8090:80 | phpmyadmin |
 | redis | 6379 | solr |
-| elasticsearch | 9200:9200 9300:9300 | elasticsearch |
+| elasticsearch | 9200:9200, 9300:9300 | elasticsearch |
 | logstash | 5000:5000 | logstash |
 | kibana | 5601:5601 | kibana |
 
