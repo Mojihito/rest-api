@@ -47,7 +47,7 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
     links:
-      - wldev-mysql:mysql
+      - mysql:mysql
     environment:
       - MYSQL_USERNAME=root
       - MYSQL_ROOT_PASSWORD=root
