@@ -59,6 +59,20 @@ login:   test
 email:  test@example.com 
 pass:    password
 ```
+
+### PDFs ###
+
+In case of `wkhtmltopdf` to work correctly you need to browse `api` from `docker ` gateway.
+As `docker` will run `wkhtmltopdf` on `php` container trying to render pdf with assets pointed to `localhost`
+and it needs to point to `webserver` container.
+
+To fix it simply inspect the gateway of `webserver`
+```bash
+$ docker inspect $(docker ps -f name=wldev-webserver -q) | grep Gateway
+```
+
+and browse `simpro` by this ip. For example: http://172.18.0.1:8080/app_dev.php/ 
+
 ### Shared folders ###
 
 Remember to toggle your drive to be available! [Shared Drives](https://forums.docker.com/t/volume-mounts-in-windows-does-not-work/10693/99)
