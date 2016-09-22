@@ -71,7 +71,7 @@ To fix it simply inspect the gateway of `webserver`
 $ docker inspect $(docker ps -f name=wldev-webserver -q) | grep Gateway
 ```
 
-and browse `simpro` by this ip. For example: http://172.18.0.1:8080/app_dev.php/ 
+and browse `api` by this ip. For example: http://172.18.0.1:8080/app_dev.php/ 
 
 ### Shared folders ###
 
