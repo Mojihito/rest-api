@@ -15,4 +15,10 @@ php bin/console fos:user:create test test@example.com password --super-admin
 echo "Create oauth test client"
 php bin/console app:oauth:create test --grant-type="refresh_token" --grant-type="client_credentials" --grant-type="password"
 
+echo "Update ElasticSearch index"
+php bin/console fos:elastica:populate
+
+echo "Setting up the Rabbit MQ fabric"
+php app/console rabbitmq:setup-fabric
+
 echo "Done deploy"
