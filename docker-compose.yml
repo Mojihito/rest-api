@@ -22,7 +22,7 @@ services:
       - api_mysql_data:/var/lib/mysql
 
   api-nginx:
-    build: nginx
+    build: docker/nginx
     container_name: api-nginx
     volumes_from:
       - api-php-fpm
@@ -32,7 +32,7 @@ services:
       - api-php-fpm
 
   api-php-fpm:
-    build: php-fpm
+    build: docker/php-fpm
     container_name: api-php-fpm
     volumes:
       - ./:/var/www/api
