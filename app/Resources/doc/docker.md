@@ -3,17 +3,17 @@ Rest Api
 
 Install `docker`, `docker-compose` and we propose to install also `docker-machine`
 
+*** Windows Jockeys please use the 'docker quick start terminal'
+*** its possible your host _rest_api/var_ and  _rest_api/var/cache_ folders get changed too root ownership (on ubuntu and possibly others) - just docker-composer down, chown back to your user, then docker-compose up again
+
 ### Setup ###
 
 Create a local working directory and clone this repo into it.
-
-make _/app/logs_ and _/app/cache_ folders - this ensures the user is not root when the data volume mounts
 
 Build and run the containers
 ```
     $ docker-compose up -d --build
 ``` 
-
 
 ### Setup Symfony ###
 1. Update app/config/parameters.yml

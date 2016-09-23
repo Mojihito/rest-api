@@ -20,14 +20,13 @@ COPY php-fpm.conf /etc/php-fpm.conf
 
 COPY php-ini-overrides.ini /etc/php/7.0/fpm/conf.d/99-overrides.ini
 
-RUN mkdir -p /var/www/rest_api/app
-RUN mkdir /var/www/rest_api/app/cache
-RUN mkdir /var/www/rest_api/app/logs
+RUN mkdir -p /var/www/api/var
+RUN mkdir /var/www/api/var/cache
+RUN mkdir /var/www/api/var/logs
+RUN mkdir /var/www/api/var/sessions
 
-RUN usermod -u 1000 www-data
-RUN chown -R www-data:www-data /var/www/rest_api/app/cache
-RUN chown -R www-data:www-data /var/www/rest_api/app/logs
+RUN chown -R www-data:www-data /var/www
 
 USER www-data
 
-WORKDIR "/var/www/rest_api"
+WORKDIR "/var/www/api"

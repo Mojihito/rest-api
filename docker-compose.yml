@@ -1,15 +1,16 @@
 version: '2'
 
 volumes:
-   symfony_cache:
-   symfony_logs:
-   mysql_data:
-   rabbit_data:
+   api_symfony_cache:
+   api_symfony_logs:
+   api_symfony_sessions:
+   api_mysql_data:
+   api_rabbit_data:
 
 services:
-  mysql:
+  api-mysql:
     image: mysql:5.6
-    container_name: mysql
+    container_name: api-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=symfony
@@ -18,36 +19,37 @@ services:
     ports:
       - "33306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - api_mysql_data:/var/lib/mysql
 
-  nginx:
+  api-nginx:
     build: nginx
-    container_name: nginx
+    container_name: api-nginx
     volumes_from:
-      - php-fpm
+      - api-php-fpm
     ports:
       - "8080:80"
     links:
-      - php-fpm
+      - api-php-fpm
 
-  php-fpm:
+  api-php-fpm:
     build: php-fpm
-    container_name: php-fpm
+    container_name: api-php-fpm
     volumes:
-      - ./:/var/www/rest_api
-      - symfony_cache:/var/www/rest_api/app/cache
-      - symfony_logs:/var/www/rest_api/app/logs
+      - ./:/var/www/api
+      - api_symfony_cache:/var/www/api/app/cache
+      - api_symfony_logs:/var/www/api/app/logs
+      - api_symfony_sessions:/var/www/api/var/sessions
     links:
-      - mysql
-      - rabbitmq
-      - redis
-      - elasticsearch
+      - api-mysql
+      - api-rabbitmq
+      - api-redis
+      - api-elasticsearch
 
-  phpmyadmin:
+  api-phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
+    container_name: api-phpmyadmin
     links:
-      - wldev-mysql:mysql
+      - api-mysql:mysql
     environment:
       - MYSQL_USERNAME=root
       - MYSQL_ROOT_PASSWORD=root
@@ -55,11 +57,11 @@ services:
     ports:
       - 8090:80
       
-  rabbitmq:
+  api-rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: api-rabbitmq
     volumes:
-      - rabbit_data:/var/lib/rabbitmq
+      - api_rabbit_data:/var/lib/rabbitmq
     ports:
       - "25671:5672"
       - "25672:15672"
@@ -69,33 +71,35 @@ services:
       RABBITMQ_DEFAULT_PASS: rpass
       RABBITMQ_DEFAULT_VHOST: /
 
-  redis:
+  api-redis:
+    container_name: api-redis
     build: docker/redis
-    ports:
-      - "6379"
 
-  elasticsearch:
+  api-elasticsearch:
     image: elasticsearch:latest
+    container_name: api-elasticsearch
     command: elasticsearch -Des.network.host=0.0.0.0
     ports:
       - "9200:9200"
       - "9300:9300"
 
-  logstash:
+  api-logstash:
     image: logstash:latest
+    container_name: api-logstash
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - ./docker/logstash:/etc/logstash/conf.d
     ports:
       - "5000:5000"
     links:
-      - elasticsearch
+      - api-elasticsearch
 
-  kibana:
+  api-kibana:
     build: docker/kibana
+    container_name: api-kibana
     volumes:
       - ./docker/kibana/config/:/opt/kibana/config/
     ports:
       - "5601:5601"
     links:
-      - elasticsearch
+      - api-elasticsearch
