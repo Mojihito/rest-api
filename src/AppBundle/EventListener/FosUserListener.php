@@ -10,9 +10,7 @@
 
 namespace AppBundle\EventListener;
 
-use FOS\UserBundle\Event\{
-    FormEvent, GetResponseUserEvent
-};
+use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,17 +28,8 @@ class FosUserListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FOSUserEvents::REGISTRATION_CONFIRM => 'onConfirm',
             FOSUserEvents::RESETTING_RESET_SUCCESS => 'onReset'
         );
-    }
-
-    public function onConfirm(GetResponseUserEvent $event)
-    {
-        $event->setResponse(new JsonResponse([
-            'message' => 'Account confirmed',
-            'user' => $event->getUser()
-        ]));
     }
 
     public function onReset(FormEvent $event)
