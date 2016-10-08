@@ -78,7 +78,7 @@ services:
       public: false
       arguments: ["@serializer.annotation_loader"]
 
-    fos_user.registration_subscriber:
+    fos_user.fos_subscriber:
       class: AppBundle\EventListener\FosUserListener
       tags:
           - { name: kernel.event_subscriber }
