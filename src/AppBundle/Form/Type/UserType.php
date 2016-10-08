@@ -39,7 +39,6 @@ class UserType extends AbstractType
             ->add('birth', DateType::class, [
                 'input' => 'timestamp',
                 'required' => false,
-                'required' => false
             ])
             ->add('avatar', EntityType::class, [
                 'class' => 'AppBundle\Entity\File',
