@@ -10,7 +10,6 @@
 
 namespace AppBundle\Filter;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Vardius\Bundle\ListBundle\Filter\Provider\FilterProvider;
 use Vardius\Bundle\ListBundle\Filter\Types\Type\{
     DateType, TextType
@@ -26,7 +25,7 @@ class UserFilterProvider extends FilterProvider
     /**
      * @inheritDoc
      */
-    public function build():ArrayCollection
+    public function build()
     {
         $this
             ->addFilter('email', TextType::class)
