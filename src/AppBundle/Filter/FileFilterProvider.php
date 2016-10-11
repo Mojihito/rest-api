@@ -10,7 +10,6 @@
 
 namespace AppBundle\Filter;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Vardius\Bundle\ListBundle\Filter\Provider\FilterProvider;
 use Vardius\Bundle\ListBundle\Filter\Types\Type\TextType;
 
@@ -24,7 +23,7 @@ class FileFilterProvider extends FilterProvider
     /**
      * @inheritDoc
      */
-    public function build():ArrayCollection
+    public function build()
     {
         $this
             ->addFilter('name', TextType::class)
