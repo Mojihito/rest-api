@@ -52,8 +52,14 @@ class ListAction extends Action\ListAction
                 'list' => $listView->render($listDataEvent),
                 'title' => $listView->getTitle(),
             ];
+
+            $routeName = $request->get('_route');
+            if (strpos($routeName, 'export') !== false) {
+                $params['ui'] = false;
+            }
         } else {
-            $columns = $listView->getColumns();
+            $results = $listView->getData($listDataEvent, true);
+            $results = $this->parseResults($results, $listView->getColumns(), $format);
 
             $count = $request->get('count');
             if ($count === 'true') {
@@ -61,22 +67,15 @@ class ListAction extends Action\ListAction
                 $query = $listView->getData($listDataEvent, true, true);
                 $aliases = $query->getRootAliases();
                 $alias = array_values($aliases)[0];
-                $query = $query
-                    ->select('count(' . $alias . '.id)');
-                $results = $query->getQuery()->getSingleScalarResult();
-            } else {
-                $results = $listView->getData($listDataEvent, true);
-                $results = $this->parseResults($results, $columns, $format);
+                $query = $query->select('count(' . $alias . '.id)');
+                $newResults = [
+                    'total' => $query->getQuery()->getSingleScalarResult(),
+                    'items' => $results
+                ];
+                $results = $newResults;
             }
 
-            $params = [
-                'data' => $results,
-            ];
-        }
-
-        $routeName = $request->get('_route');
-        if (strpos($routeName, 'export') !== false) {
-            $params['ui'] = false;
+            $params = $results;
         }
 
         $paramsEvent = new ResponseEvent($params);
@@ -88,6 +87,35 @@ class ListAction extends Action\ListAction
         $responseHandler = $controller->get('vardius_crud.response.handler');
 
         return $responseHandler->getResponse($format, $event->getView(), $this->getTemplate(), $paramsEvent->getParams(), 200, [], ['groups' => ['list']]);
+    }
+
+    /**
+     * @param array $results
+     * @param ArrayCollection|ColumnInterface[] $columns
+     * @param string $format
+     * @return array
+     */
+    protected function parseResults(array $results, $columns, $format)
+    {
+        foreach ($results as $key => $result) {
+            if (is_array($result)) {
+
+                $results[$key] = $this->parseResults($result, $columns, $format);
+            } elseif (method_exists($result, 'getId')) {
+                $rowData = [];
+
+                /** @var ColumnInterface $column */
+                foreach ($columns as $column) {
+                    $columnData = $column->getData($result, $format);
+                    if ($columnData) {
+                        $rowData[$column->getLabel()] = $columnData;
+                    }
+                }
+                $results[$key] = $rowData;
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -125,34 +153,5 @@ class ListAction extends Action\ListAction
             ['name' => 'sort', 'dataType' => 'string', "required" => false, 'description' => 'sort method (ASC|DESC)'],
             ['name' => 'count', 'dataType' => 'bool', "required" => false, 'description' => 'if set actions returns count of objects (filters are available)'],
         ]);
-    }
-
-    /**
-     * @param array $results
-     * @param ArrayCollection|ColumnInterface[] $columns
-     * @param string $format
-     * @return array
-     */
-    protected function parseResults(array $results, $columns, $format)
-    {
-        foreach ($results as $key => $result) {
-            if (is_array($result)) {
-
-                $results[$key] = $this->parseResults($result, $columns, $format);
-            } elseif (method_exists($result, 'getId')) {
-                $rowData = [];
-
-                /** @var ColumnInterface $column */
-                foreach ($columns as $column) {
-                    $columnData = $column->getData($result, $format);
-                    if ($columnData) {
-                        $rowData[$column->getLabel()] = $columnData;
-                    }
-                }
-                $results[$key] = $rowData;
-            }
-        }
-
-        return $results;
     }
 }
