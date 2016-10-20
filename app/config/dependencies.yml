@@ -6,7 +6,7 @@ fos_oauth_server:
   auth_code_class:     AppBundle\Entity\AuthCode
 
   service:
-    user_provider: fos_user.user_manager
+    user_provider: fos_user.user_provider.username_email
     options:
       supported_scopes: user admin super_admin
 
