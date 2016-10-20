@@ -12,7 +12,7 @@ namespace AppBundle\Filter;
 
 use Vardius\Bundle\ListBundle\Filter\Provider\FilterProvider;
 use Vardius\Bundle\ListBundle\Filter\Types\Type\{
-    DateType, TextType
+    DateType, TextType, PropertyType
 };
 
 /**
