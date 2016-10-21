@@ -18,11 +18,10 @@ fos_rest:
   format_listener:
       enabled: true
       rules:
-          fallback_format: xml
-          exception_fallback_format: xml
+          fallback_format: json
+          exception_fallback_format: json
   access_denied_listener:
-      xml: true
-
+      json: true
   allowed_methods_listener: true
   routing_loader:
       default_format: json
